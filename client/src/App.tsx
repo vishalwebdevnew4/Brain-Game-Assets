@@ -3,14 +3,24 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/not-found";
+import { useThemeSync } from "@/hooks/use-game";
 
-function Router() {
+import NotFound from "@/pages/not-found";
+import Splash from "@/pages/Splash";
+import Home from "@/pages/Home";
+import LevelSelect from "@/pages/LevelSelect";
+import Level from "@/pages/Level";
+
+function GameRouter() {
+  // Sync theme based on user settings
+  useThemeSync();
+
   return (
     <Switch>
-      {/* Add pages below */}
-      {/* <Route path="/" component={Home}/> */}
-      {/* Fallback to 404 */}
+      <Route path="/" component={Splash} />
+      <Route path="/home" component={Home} />
+      <Route path="/levels" component={LevelSelect} />
+      <Route path="/level/:id" component={Level} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -20,8 +30,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <GameRouter />
         <Toaster />
-        <Router />
       </TooltipProvider>
     </QueryClientProvider>
   );
