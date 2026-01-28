@@ -1,0 +1,1383 @@
+Brain Challenge – Game Design Document
+Game Overview
+
+Genre & Platform: Brain Challenge is a free-to-play mobile brain teaser puzzle game for Android devices. It consists of 100 unique levels of varying puzzle types that require creative user interactions (tapping, dragging, swiping, and more) rather than traditional multiple-choice answers. Each level presents a quirky scenario or riddle that players must solve by thinking outside the box – for example, dragging objects to reveal hidden clues or using multi-touch gestures in clever ways. The game is designed for casual players of all ages who enjoy trick puzzles and lateral thinking challenges.
+
+Objective: The goal is to complete all 100 puzzles. There is no overall time limit or score; the reward for solving a level is progression, in-game coins, and the satisfaction of the “aha!” moment. Puzzles increase in difficulty and complexity as the player advances, introducing new interaction techniques and trickier logic. Players are encouraged to experiment with the touch screen – often the obvious answer is wrong and the solution involves an unexpected action (e.g. moving an on-screen object or using two fingers).
+
+Monetization: The game is free with optional ads and in-app purchases. A soft currency (coins) is earned through play and can be spent on hints. Players may also watch rewarded ads to gain extra coins or hints. The design follows a hybrid monetization strategy common in top mobile games – balancing in-app purchases (like coin packs or ad-removal) with opt-in ads for free rewards. This ensures that players who don’t want to pay can still progress by engaging with ads, while offering a purchase option for those who prefer not to watch ads.
+
+Progression & Replayability: Levels are linear and must be unlocked sequentially. This linear progression allows the difficulty to ramp gradually and introduces new puzzle mechanics in early levels. Players can replay completed levels at any time via the Level Select menu, but coins for level completion are only awarded once per level (to prevent farming). Achievements (like solving a puzzle without hints, or completing a set of levels) can be added to provide extra goals, though they are not the focus. There is no “lives” system – players can attempt a puzzle as many times as needed. If truly stuck, they can use the hint system or skip a level by spending coins (skipping costs significantly more coins than a hint, to discourage overuse).
+
+Tone & Theme: The game maintains a light-hearted, minimalist cartoon style with humorous puzzle solutions. Many levels use playful trickery or puns. There is no overarching story; however, occasional recurring characters (e.g. “Tom the cat”) or thematic callbacks provide a sense of continuity and charm. The focus is on surprise and delight – puzzles often subvert expectations in a funny way (like literally “thinking outside the box” by dragging an object out of the puzzle frame). This makes the game engaging for both solo play and for sharing with friends (“Can you figure this one out?” moments).
+
+Gameplay and Mechanics
+
+Core Gameplay Loop: Each level starts by presenting the player with a static scene or riddle and a prompt (usually the level title or a short instruction). The player can interact directly with on-screen elements using touch gestures. There are no time limits on most puzzles (some levels simulate timed scenarios but always have a trick to stop the timer), allowing players to think and experiment. If the player performs the correct interaction sequence, the puzzle is solved, and a success screen appears with a congratulatory message, coin reward, and a button to proceed to the next level. If the player triggers a fail condition, a failure message or animation is shown (e.g. a “wrong” buzzer sound or the character failing in a humorous way), and the level either resets automatically or allows the player to try again immediately. There is no game-over – players can retry until they solve it.
+
+User Interactions: The puzzles leverage a variety of touch interactions:
+
+Tap: Select or activate an object. Some puzzles require tapping specific items (e.g. tapping all apples on screen) or buttons in a certain sequence.
+
+Double-Tap: In rare cases, double taps might be used for unique effects (though not heavily relied on).
+
+Long Press (Hold): Used to initiate actions that require “holding” an object or button. For example, holding a finger on a character to slowly inflate it like a balloon, or covering an item with a finger to block it.
+
+Drag & Drop: Many puzzles involve dragging objects, sometimes to combine them (e.g. dragging one color onto another to mix them) or to move them out of the way. Dragging can also include swiping motions (e.g. sliding something quickly or shaking an object by oscillating a drag back-and-forth).
+
+Swipe/Slide: Apart from dragging objects, swiping the screen can scroll the view (if the level is larger than one screen) or simulate an action (like shaking a tree by swiping it).
+
+Multi-Touch: Some advanced puzzles require two or more fingers. For instance, holding down one object with one finger while tapping something else, or using two fingers to pinch-zoom or rotate an object. Multi-touch adds another layer of challenge since it’s less commonly used by players.
+
+Device orientation: Although primarily touch-based, a few puzzles simulate device movements (e.g. shaking an object by rapid swiping). We avoid requiring actual accelerometer input so the game can be played in any orientation, but we mimic those effects through touch gestures.
+
+Puzzle Structure: Each puzzle is self-contained, typically solved in a few seconds once the solution is known (though it may stump the player for much longer until they find the trick). Common puzzle mechanics include: finding hidden objects by moving things around, interpreting wordplay literally, applying real-world logic (gravity, magnetism, etc.) in a cartoon scenario, and subverting expectations (for example, when told “Do not press the red button”, the solution might be to press something else or to move the red button aside). As the game progresses, puzzles may require multiple steps to solve (e.g. first combine two items, then give the result to a character). Levels 1–10 serve as a tutorial/introduction to simple interactions, and by Levels 90+, the player will encounter puzzles combining multiple techniques (multi-touch, multi-step logic, etc.).
+
+Failure States & Reset: Many puzzles don’t have a traditional “failure” that ends the level – instead, an incorrect action might simply have no effect or a humorous negative feedback (e.g. the character says “Nope!”). Some levels, however, have specific fail conditions (e.g. a character gets hurt or an item breaks if you do the wrong thing). In those cases, a fail screen or message will appear, and the level resets to its initial state with a try again option. The fail screen is brief (no punishment besides a funny message) to keep players engaged and not frustrated. Players can also manually reset a level at any time via a reset button in the UI if they feel they’ve messed up the configuration.
+
+Example Gameplay Flow: A player enters a level titled “Feed the cat, he is hungry.” The scene shows a cat and a table with the word “cat” in the instruction text. The obvious action might be to drag food to the cat, but no food is visible. The player might try tapping the cat (nothing happens). A hint might nudge that words can be interacted with. The player then drags the word “cat” from the instruction to the cat’s mouth, and it magically turns into a cookie, solving the puzzle. A success overlay appears, granting coins and unlocking the next level.
+
+This flow illustrates the emphasis on experimenting with everything on screen. Even the UI text can be part of the puzzle solution in this game (one puzzle literally has the player drag the “LEVEL” label from the interface into the puzzle).
+
+Next, we break down all 100 levels with their puzzle specifics:
+
+Level Design and Puzzles
+
+Each level is outlined with a Title (a clue or task description), a brief Layout Summary of the scene, the required Interaction to solve it, common Fail Cases/Misconceptions, and one or two Hints available to the player. The hints are designed to escalate: the first hint is a gentle nudge, and the second hint (if provided) is more direct. Hints must be purchased with coins or unlocked by watching ads (see Hint System for details). Below is the level-by-level breakdown:
+
+Levels 1–10 (Introductory Puzzles)
+
+Level 1: Which is the Biggest?
+Layout: Several animals are shown (an elephant, a mouse, and a lion), each a different size on-screen.
+Interaction: Tap the largest image (the lion). The puzzle plays on literal size – the lion’s picture is drawn larger than the elephant’s, even though in reality an elephant is bigger.
+Fail Cases: Tapping the elephant (a common choice based on real size) will result in a failure message. Tapping any non-largest animal is incorrect.
+Hint: “Think in terms of the picture, not real life. Which figure looks the biggest?”
+
+Level 2: Blossom the Flower
+Layout: A potted flower sits at the center, but the sun in the sky is hidden behind two draggable clouds.
+Interaction: Drag the clouds away from the sun to reveal sunlight. After a moment of sunlight, the flower blooms.
+Fail Cases: Players might tap the flower or try to water it (there is no water in the scene) – these do nothing. Dragging only one cloud partially may not fully expose the sun (the flower won’t bloom until it gets full sun).
+Hint: “Something is blocking the sun. What could you move to help the flower?”
+
+Level 3: Put the Elephant into the Fridge
+Layout: A cartoon fridge (with its door closed) stands opposite a small elephant.
+Interaction: Tap the fridge to open it, then drag the elephant into the fridge. The absurdity is the point – the elephant will shrink to fit once you try. Closing the door is automatic on success.
+Fail Cases: Tapping or dragging the elephant alone does nothing (it can’t move unless the fridge is open). Trying to drag the elephant without opening the fridge first will fail.
+Hint: “Perhaps you need to open something first. That elephant looks cold!”
+
+Level 4: Slide to Unlock
+Layout: A locked phone screen is shown with an arrow and the text “Slide to unlock” pointing right (a parody of phone locks).
+Interaction: Swipe left on the arrow (opposite of the instruction). The trick is that it says slide left to unlock (misleading players to swipe right). Swiping left unlocks the “screen,” solving the level.
+Fail Cases: Swiping right (the intuitive action) does nothing (or shows a small shake “wrong” animation). Tapping the arrow also does nothing.
+Hint: “Try reading the instruction very literally. Which direction does it actually say?”
+
+Level 5: How Many Pizza Slices?
+Layout: A pizza with several slices is shown on a plate. Some slices are clearly visible; others might be hidden under those.
+Interaction: Drag the visible pizza slices aside – more slices are hidden beneath. After moving pieces, count all slices. The correct count is 9 slices (for example). Finally, tap the correct number on a provided number pad (or choose from multiple-choice).
+Fail Cases: If the player counts only the visible slices (e.g. sees 3 on top) and inputs that, it’s wrong. Not moving all slices (some slices could be stacked) yields an incorrect count.
+Hint: “Could some slices be hidden? Try moving things around on the plate.”
+
+Level 6: Turn Off the Kettle
+Layout: A boiling kettle is shown with steam, and a big red ON button or lever is highlighted. It might say “Too dangerous! Turn it off!”
+Interaction: Tap the red switch on the kettle to turn it off. This is a straightforward level to introduce the idea that sometimes a simple tap is all that’s needed.
+Fail Cases: Doing nothing leaves the kettle boiling (fail if time runs out, though we likely don’t time it). Trying to interact with non-interactive parts (like the kettle body or steam) has no effect.
+Hint: “You might just need to hit the off switch. Look for a red button.”
+
+Level 7: Feed the Cat
+Layout: A cat sits looking hungry. The instruction text says “Feed the cat please, he is hungry,” and there’s a plate of cookies on the screen (not reachable by the cat). The word “cat” appears in the text.
+Interaction: Drag the plate of cookies onto the word “cat” in the instruction text. The word “cat” magically transforms into an actual cat image at the plate, which eats the cookies (the idea being the text became the cat’s mouth). Alternatively, dragging the word “cat” onto the cookies works similarly. (This teaches that text can be interactive.)
+Fail Cases: Dragging cookies directly to the cat character doesn’t work (the cat is just an image). Tapping the cat or cookies alone doesn’t solve it.
+Hint: “Perhaps the word ‘cat’ isn’t just a word... try moving things onto it.”
+
+Level 8: Where’s the Green Ball?
+Layout: A blue ball and a yellow ball are on-screen, but no green ball. Possibly a container labeled “Blue” and “Yellow” as well.
+Interaction: Drag the blue ball and drop it onto the yellow ball (or vice versa). They combine to form one green ball (mixing colors). Once the green ball appears, the level is solved.
+Fail Cases: Tapping either ball alone does nothing. Dragging them to irrelevant areas does nothing. Not realizing you can combine them is the main fail scenario (player might guess wrong like looking for a hidden green ball which isn’t there).
+Hint: “What do blue and yellow make when mixed? Perhaps combine the two balls.”
+
+Level 9: What is Unusual Here?
+Layout: A cartoon drawing (e.g. a clown or a hand of cards) is shown. Something in it is off – for example, a clown with six fingers on one hand.
+Interaction: Tap the unusual detail in the picture (the clown’s hand with six fingers). Identifying the anomaly solves the level.
+Fail Cases: Tapping other normal parts of the picture does nothing. If players don’t notice the extra finger (common mistake), they might tap elsewhere. There’s no explicit fail until they hit a wrong guess multiple times (then perhaps a hint prompt appears).
+Hint: “Look carefully at the details. Count things – anything out of the ordinary number-wise?”
+
+Level 10: Catch 5 Apples
+Layout: Apples are falling from a tree (animated). The player needs to “catch” or tap them before they disappear off the bottom of the screen.
+Interaction: Tap each apple as it falls. The player must successfully tap 5 apples in total. This tests reaction time but in an easy way (apples fall slowly).
+Fail Cases: If an apple falls past without being tapped, it might splat on the ground (and the level could reset or count as fail). Tapping non-apple objects does nothing. Missing too many apples triggers a retry.
+Hint: “Be quick! Tap the apples as they fall – don’t let any hit the ground.” (This hint appears only if the player fails once, since the objective is otherwise clear.)
+
+Levels 11–20 (Trick Questions and Simple Multi-Step)
+
+Level 11: Which One is Longest?
+Layout: The screen shows the names of several months (e.g. Jan, Feb, Mar, February, etc.) or words of different lengths. The question asks which one is the longest.
+Interaction: Tap “February.” The trick is that it’s not about time or duration but about word length – “February” has the most letters.
+Fail Cases: Tapping, say, “December” (thinking it has 31 days, thus “longest” month) is wrong. Tapping any other month is incorrect.
+Hint: “Maybe it’s asking about the word itself, not the month’s days. Which name is longest in letters?”
+
+Level 12: Tap in Order
+Layout: Several numbers are displayed on the screen out of sequence: 1, 49, 80, 5, 7, 11, 101 (perhaps on separate buttons or scattered). The instruction says “Tap them in order: 1, 49, 80, 5, 7, 11, 101.” After a moment, the numbers shuffle or hide.
+Interaction: Tap the numbers in the given order from memory. This is a memory challenge – the player must remember the sequence and tap the numbers accordingly. If the numbers remain visible, it’s a simple following task; more challenge if they briefly flash then hide.
+Fail Cases: Tapping a wrong number out of sequence resets the puzzle (and perhaps scrambles numbers anew). A common fail is forgetting the sequence or mixing up two numbers.
+Hint: “Memorize the sequence shown, then tap each number in that exact order. The first is 1... what comes next?”
+
+Level 13: Tom Must Jump
+Layout: A character (Tom) needs to cross a gap. A mushroom and a “Jump” button are on-screen. Tom is too small to make the jump initially.
+Interaction: Drag the mushroom to Tom. Tom eats it and grows larger (a nod to Mario). Then tap the Jump button – now Tom can jump across the gap successfully.
+Fail Cases: Tapping Jump before doing anything – Tom will jump and fall short (fail). Not using the mushroom (Tom remains small) is a fail if Jump is pressed. Dragging the mushroom anywhere else does nothing useful.
+Hint: “Tom might need a power-up. That mushroom looks familiar... perhaps get Tom to eat it?”
+
+Level 14: Hidden Number
+Layout: A large rock or stone sits in the center, with a question asking, “What is the hidden number?” Perhaps some faint outline of a number is partially visible under the rock.
+Interaction: Drag the stone away (e.g. swipe it aside with a finger). Underneath, a number (like 40) is written on the ground. The level clears once the number is revealed.
+Fail Cases: Inputting a guess without moving the rock is impossible since no input mechanism appears until the number is found (or players might randomly tap around hoping to find something). Not dragging the rock = you can’t solve it.
+Hint: “Something might be under that rock. Can you move things in this puzzle?”
+
+Level 15: Save the Boy from the Dog
+Layout: A boy is crying on one side, a growling dog blocking his path. There’s a bone half-buried in a dirt mound nearby (and possibly a shovel lying around).
+Interaction: Drag the shovel to the dirt mound to dig. After digging, a bone appears. Drag the bone to the dog. The dog becomes happy/busy with the bone, clearing the way for the boy to escape.
+Fail Cases: Approaching the dog without distracting it (e.g. dragging the boy or touching the dog) triggers a fail (dog chases the boy). Not digging in the obvious mound yields no bone, so nothing happens.
+Hint: “Perhaps distract the dog with something it likes. Is anything buried nearby that a dog would want?”
+
+Level 16: Black Sheep
+Layout: A flock of white sheep is shown along with the text “Where is the black sheep?”. The word “black” in the question is colored black or is draggable text.
+Interaction: Drag the word “black” from the question and drop it onto one of the white sheep. That sheep turns black, becoming the “black sheep.” This solves the puzzle.
+Fail Cases: Tapping the sheep randomly doesn’t do anything (there is initially no black sheep to find). Players might look for a hidden dark sheep silhouette (there isn’t one). The key is using the text.
+Hint: “Maybe you can make a sheep black yourself. Is there something black you can use?”
+
+Level 17: Last Letter of “spelling”
+Layout: The riddle asks, “What is the last letter in ‘spelling’?” The word “spelling” is written (with a capital G at end perhaps).
+Interaction: Tap the letter “G” in the word “spelling” on-screen. This is a trick – many think alphabetically or something, but literally the last letter of the word is “g” (which might be capitalized or highlighted in the text).
+Fail Cases: Typing or tapping something like “G” on a keyboard if provided would be correct, but any other letter is wrong. If players overthink (like thinking of the alphabet, which ends with Z), they’ll be wrong.
+Hint: “It asks for the last letter in the word. The word is ‘spelling’… what letter does it end with?”
+
+Level 18: Intruder in the Cat Party
+Layout: Several cats of various colors are having a “party.” The prompt says there’s an intruder. Possibly one “cat” is actually a mouse in disguise or a different animal hidden. For instance, one cat may have a tiny mouse tail peeking out.
+Interaction: Find and Tap the intruder – e.g. tap the area where a small mouse is hiding among the cats (maybe inside a hat or under a table). Once tapped, the mouse reveals itself and scampers off.
+Fail Cases: Tapping the actual cats does nothing (maybe they meow, but no solve). If the player fails to spot the subtle clue (like a tiny tail), they might need a hint.
+Hint: “Not everything here is as it seems. One of these ‘cats’ has a long skinny tail... Look closely at their outlines.”
+
+Level 19: Save Her (Lightning)
+Layout: A woman is being robbed by a thief under a stormy sky. There are two clouds in the sky with sparks indicating potential lightning, but they’re apart. The prompt: “Save her!”
+Interaction: Drag the two storm clouds together overhead. This causes a lightning bolt to strike the thief, scaring him away (cartoonishly). The woman is safe.
+Fail Cases: Tapping the thief or the woman does nothing helpful. Trying to directly fight the thief (no tools to do so) fails. Noticing the storm setup is key.
+Hint: “Thunder is rumbling… maybe the weather can help. What if the storm clouds combined?”
+
+Level 20: Tom is Hungry Again
+Layout: Tom (the cat) is back, sitting by a mouse hole. There’s a can of cat food and a stove/oven in the scene. The prompt indicates Tom is hungry but the mouse won’t come out.
+Interaction: Drag the cat food can onto the stove and turn on the stove (perhaps by tapping a knob). The smell of warm food lures a mouse out of the hole. Tom pounces on the mouse to eat it (or eats the food, either outcome solves the hunger).
+Fail Cases: Giving the cold cat food directly to Tom (drag to Tom) doesn’t work – the puzzle implies warming it to lure the mouse. Tapping the oven without the food does nothing.
+Hint: “Maybe Tom wants something fresher... Try heating up the food to attract a certain live treat.”
+
+Levels 21–30 (New Mechanics and Word Tricks)
+
+Level 21: Make Them Fall in Love
+Layout: Two characters stand apart unhappily (a boy and girl). A balloon hovers above, and there are wedding rings on the ground (with a sharp diamond).
+Interaction: Drag the balloon over the sharp wedding ring. The balloon pops (“BOOM!”) due to the diamond’s sharpness, startling the characters and literally making them jump into each other’s arms in surprise – now they’re “in love.”
+Fail Cases: Dragging the balloon elsewhere (not contacting the ring) just moves it around. Tapping the characters does nothing. Many players might try to hand the ring to one of them (not effective).
+Hint: “That ring has a sharp diamond... maybe something can go boom! and create a romantic moment.”
+
+Level 22: Which Cat is on the Right?
+Layout: Several cat images are lined up partially off-screen, and the prompt asks to identify the cat on the far right. However, the rightmost cat is actually hidden just beyond the screen edge.
+Interaction: Swipe left on the scene (or slide the screen to the right) to reveal an additional hidden cat on the far right. Once that cat is visible, tap it.
+Fail Cases: Players might tap the rightmost visible cat (which is actually second from the right) – that’s wrong. Not realizing the level extends beyond the initial view is the main pitfall.
+Hint: “Maybe there’s more to see if you scroll. Try sliding the scene sideways to find another cat.”
+
+Level 23: Help the Car Cross
+Layout: A car is waiting to cross a bridge, but the bridge has a crack/hole in the middle. The car won’t move because it would fall.
+Interaction: Use multi-touch: Hold one finger on the cracked section of the bridge (acting as a “patch”), and tap the car with another finger to drive across. The car crosses safely over the finger “bridge.”
+Fail Cases: Tapping the car without covering the gap causes the car to fall (fail). Covering the gap with one finger but not tapping the car (nothing happens). Trying to drag the bridge pieces together (impossible) doesn’t solve it.
+Hint: “You may need to use two fingers at once. Perhaps you can become the missing bridge!”
+
+Level 24: Cat Above Text
+Layout: There’s an image of a cat above a line of text that says “Where is the cat above this text?”. The cat graphic is literally sitting above the written question on screen.
+Interaction: Drag the text downward (or swipe it down) so that it goes below the cat image. Once the text is moved, the cat is now physically above it, fulfilling the condition and solving the puzzle. (In other words, the text was originally covering the cat image’s position.)
+Fail Cases: If the player tries to find an invisible cat in the sky or background, nothing happens. Tapping the cat image itself might just produce a meow but not solve it until the text is moved.
+Hint: “The text itself might be blocking something. Can you move the sentence somewhere else?”
+
+Level 25: It’s Too Dark!
+Layout: The screen is almost entirely black, with a small “hint” lightbulb icon visible in a corner and maybe some eyes shining in the darkness (like a hidden cat). The prompt: “It’s too dark, I can’t find my cat!”
+Interaction: Drag the hint lightbulb icon (normally used to get hints) into the center of the screen and move it around like a flashlight. This illuminates the area under it, revealing the hidden cat in the darkness. Once the cat is found (illuminated), the level is solved.
+Fail Cases: If the player just taps the hint button normally (we might disable actual hint function temporarily), nothing happens or they might accidentally use a hint – but the intended solution is to use the icon as a tool. Not dragging the light = can’t see the cat.
+Hint: “You do have a light source... perhaps that hint bulb could brighten things up if you move it around.”
+
+Level 26: Beat the Timer
+Title: “Reach the finish before time runs out!”
+Layout: A race car at a start line and a finish line on the right. A big timer clock at top starts counting down from 10 seconds once the level begins. A “Go” button is present to start the car.
+Interaction: Tap the clock repeatedly until it breaks. Breaking the clock freezes the timer at some time (or removes it entirely). Now tap the “Go” button to have the car drive to the finish without the timer running out. Essentially, the trick is to stop the timer rather than racing the car.
+Fail Cases: If the player just hits “Go” immediately, the car moves but the countdown will hit 0 and trigger a fail (car stops). Trying to directly drag the car or push it faster doesn’t help if the timer expires.
+Hint: “You could try disabling the timer. Maybe a few taps on that clock could ‘stop’ time.”
+
+Level 27: Clean the Glasses
+Layout: A set of dirty drinking glasses or window glasses that are smudged. The prompt might say “We must be ready before guests arrive! (Clean the glasses).”
+Interaction: Rub the dirty glasses with your finger (perform a scrubbing circular swipe). As you rub each glass, the dirt smudges disappear gradually. Once all glasses are shiny, the level is complete.
+Fail Cases: If the player just taps a glass, a little dirt might clear but not all – continuous rubbing is needed (we simulate cleaning via continuous touch). Stopping too early leaves streaks (not solved).
+Hint: “It looks like these just need a good wipe. Try rubbing the dirty spots with your finger.”
+
+Level 28: Find the Chocolate Egg
+Layout: Three eggs are on a table, one of which is a chocolate egg but it’s not obvious which. The sun is in the sky. Possibly one egg is labeled differently.
+Interaction: Drag and drop the middle egg into the sunlight (hold it under the sun). The real chocolate egg will melt and spill chocolate, revealing itself. That’s the hidden chocolate egg – level clears once identified.
+Fail Cases: If the player taps eggs or cracks them normally, nothing special happens (maybe the normal eggs just crack with yolk, not solving the puzzle). Choosing the wrong egg yields no result. Only the chocolate one melts under sun.
+Hint: “Chocolate reacts to heat... maybe take each egg into the sunlight and see what happens.”
+
+Level 29: Balance the Scale
+Layout: A balance scale with two pans – one side is heavy with several objects, the other side has fewer. For example, left side has 3 weights, right side has 2 weights and an extra weight object is lying nearby. The scale is tipped left.
+Interaction: Drag one weight from the heavier side to the lighter side (or remove it entirely) to make the scale balanced. For instance, move one weight from left pan to right pan until both sides have equal total weight. When the scale’s needle centers (balanced), the puzzle solves.
+Fail Cases: Dragging weights incorrectly (e.g. adding more to the heavy side or removing from the light side) makes it more unbalanced – nothing will happen until balanced. If the player doesn’t interact, the scale stays tilted (fail).
+Hint: “Make both sides equal. Try moving a weight from the lower side to the higher side until it evens out.”
+
+Level 30: Blue Car Victory
+Title: “Blue has to win this race!”
+Layout: A racing scene with a red car and a blue car at the starting line. There’s a “Go” button to start the race. The blue car looks slower. Above the crowd, a blue barrel (perhaps fuel or turbo) is visible on a platform.
+Interaction: Tap the blue barrel above the audience, then drag it down and give it to the blue car. This acts as a power-up fuel. Now tap the “Go” button – the blue car, with the boost, speeds ahead and wins the race.
+Fail Cases: If “Go” is tapped without boosting, the red car wins (fail). Giving the barrel to the red car or not using it at all will cause blue to lose. Tapping but not dragging the barrel doesn’t help.
+Hint: “Maybe the blue car needs extra fuel. Is there something nearby that could make it go faster?”
+
+Levels 31–40 (Intermediate Tricks & Multi-touch)
+
+Level 31: Burn Everything!
+Layout: The phrase “Burn everything” is displayed as part of the instruction. There is a lit torch on one side of the screen and some flammable-looking objects.
+Interaction: Drag the torch onto the word “everything” in the instruction text. The letters catch fire, literally burning the word “everything.” The level completes once the text is burnt (interpreting the goal literally – burning the word itself).
+Fail Cases: Dragging the torch to actual objects or around the screen might burn them visually but doesn’t solve the puzzle unless the word is burned. Tapping the torch alone does nothing.
+Hint: “Maybe ‘everything’ isn’t referring to objects… What if you burn the word ‘everything’ itself?”
+
+Level 32: Exam Cheat
+Title: “Jack didn’t study for the exam, but he has to pass.”
+Layout: Jack sits behind a classmate. He needs to see the classmate’s test answers. Jack’s neck can apparently stretch.
+Interaction: Place one finger on Jack’s head and drag upward (or vertically stretch with two fingers) to elongate his neck. His head rises high enough to peek at the classmate’s paper. After a moment, the teacher doesn’t notice and Jack smiles – level solved.
+Fail Cases: If the player does nothing or just taps Jack, he remains short and fails (maybe a fail screen “Jack failed the exam”). Dragging other objects (maybe there’s a pencil, etc.) won’t solve the core issue. Stretching too slowly or not far enough might not reveal the answers – must extend sufficiently.
+Hint: “Perhaps Jack could physically stretch to see the paper in front. Try pulling on his head – it might just stretch like rubber.”
+
+Level 33: We Need 9 Apples
+Layout: The text says “We need 9 apples.” There are 6 apples visible. Also, the number “9” appears in the instruction itself or on an object (like a paper).
+Interaction: Rotate the written number “9” by 180 degrees to turn it into a “6”. This clever trick changes the requirement: now it reads “We need 6 apples.” Since 6 apples are present, the condition is satisfied and the level clears. Essentially, you solve it by altering the problem itself.
+Fail Cases: Counting apples and seeing only 6, players might try to add apples or say “we only have 6” – but the solution is to change the 9. If they don’t think to rotate the number (which might involve a two-finger twist gesture or dragging one end of the number), they’ll be stuck.
+Hint: “Maybe you don’t actually need nine... can you change the number somehow? What does a 9 look like upside-down?”
+
+Level 34: Shrink the Bus
+Title: “How can the bus pass through there?”
+Layout: A bus is too large to fit under a low bridge on a road. The bridge clearance is lower than the bus’s height.
+Interaction: Pinch (two-finger zoom) on the bus to scale it down in size. By zooming out on the bus sprite, you effectively shrink the bus. Once it’s small enough, it can drive under the bridge. The player then taps a move button or the bus to have it go through.
+Fail Cases: If the player just tries to drive the bus (tapping it or a forward arrow) at full size, it hits the bridge (fail or stops). Trying to move the bridge (impossible) or other objects doesn’t help. Only the pinch gesture on the bus solves it.
+Hint: “The bus is too tall... maybe make it smaller? Use two fingers on the bus and pinch inward to shrink it.”
+
+Level 35: Egg or Bald Head?
+Layout: A number of eggs (say 5) are shown. The prompt: “How many eggs are there?” They look identical, but one “egg” is actually a bald man’s head camouflaged among them.
+Interaction: Tap each egg. One of them reacts differently – when tapped multiple times, the “egg” reveals a face (it’s a bald man crouching). That one doesn’t count as an egg. So the answer is 4 eggs. The puzzle is solved either by tapping the odd one until revealed or by entering the correct count after discovering it.
+Fail Cases: Counting all 5 as eggs and answering 5 is wrong. If the player doesn’t tap them, they might not notice the difference. Only by interacting (tapping or attempting to pick up) do they find the fake egg.
+Hint: “Check each egg carefully... one seems a bit different. Try tapping them – does one ‘egg’ react oddly?”
+
+Level 36: Scissors Wins
+Layout: A rock, paper, and scissors are all present (representing the Rock-Paper-Scissors game). The prompt: “Scissor has to win.” Perhaps rock is currently on top of scissors, and paper is off to side.
+Interaction: Drag the paper and cover the rock with it (paper beats rock, so remove rock’s threat), then use the scissors to cut the paper. Specifically, first remove or flick away the rock using the paper, then tap or drag the scissors onto the paper to “win.” This leaves scissors as the last remaining – hence scissors wins.
+Fail Cases: If the player tries to have scissors directly cut rock, it fails (rock “wins” and nothing happens). Not removing the rock first means scissors can’t win. Also, doing the sequence in wrong order might not solve it: (e.g. cutting paper before covering rock doesn’t eliminate rock).
+Hint: “Think of Rock-Paper-Scissors rules. First use paper to deal with the rock, then scissors can handle the paper.”
+
+Level 37: Stop the Aliens!
+Layout: Aliens are attacking in a whack-a-mole style scene. A mix of alien creatures and cats appear on screen. The instruction: “Stop the alien invasion!” (with a note “don’t harm the cats”).
+Interaction: Tap all the aliens as quickly as possible, avoiding tapping any cats. This is a reflex level – every alien tapped disappears. When all aliens are gone (and all cats remain unharmed), the level is cleared.
+Fail Cases: Tapping a cat counts as a fail (perhaps a cat yowls and you lose). Missing an alien (allowing it to stay too long) might also fail (if the “invasion” succeeds). Essentially, any non-perfect execution results in a retry.
+Hint: “Only hit the aliens! Be careful – don’t tap the kitties. It might take quick reflexes.”
+
+Level 38: Achieve “VIC-TO-RY”
+Layout: The word “VICTORY” is broken into three parts on the screen: “VIC”, “TO”, “RY”, with corresponding empty slots shaped like the full word. The prompt: “Help me achieve victory!”
+Interaction: Drag each letter group into the correct slot to spell “VICTORY” in full. For example, drag “VIC” to the start, “TO” to the middle, “RY” to the end to assemble the word. Once the word is correctly formed, confetti or a cheer happens and level clears. (This is effectively a simple jigsaw with letters).
+Fail Cases: Placing the pieces in wrong order (it won’t form the word and won’t solve). If one piece is misplaced or not all pieces are used, the puzzle remains unsolved. However, this puzzle is straightforward if they understand to form the word.
+Hint: “Put the pieces together – literally. Arrange the chunks to spell a common word: VICTORY.”
+
+Level 39: Bathroom Signs
+Title: “Help this poor man, please.”
+Layout: A male stick figure is standing desperately in front of two restroom doors. The left door has the women’s symbol (skirt figure), the right has the men’s symbol. The men’s door is occupied (maybe a red “in-use” sign), and the line for women’s is empty.
+Interaction: Drag the skirt part of the women’s sign off (or swap the signs). For example, drag the triangular skirt icon from the women’s symbol to turn it into a men’s symbol. Now the left door effectively becomes another men’s room. The man runs into that door happily.
+Fail Cases: If the player tries to open the men’s door (tapping it) – it’s occupied (fail message like “It’s occupied!”). Tapping the man, he just dances in desperation. Dragging the man to the women’s door without changing the sign could result in embarrassment (fail). The sign must be altered.
+Hint: “Perhaps change the door’s sign. That skirt on the ladies’ sign looks removable… turn it into a men’s room for him!”
+
+Level 40: Correct Equation
+Title: “How can this be correct? 15 x 15 x 15 = 45” (An obviously incorrect equation is shown).
+Layout: The equation 15 x 15 x 15 = 45 is on a chalkboard. There is a slingshot or eraser available.
+Interaction: Tap or swipe each “x” (multiplication sign) to rotate it into a “+” (plus sign). For instance, hitting the X with the slingshot/eraser tilts it 45 degrees. Changing 15 x 15 x 15 into 15 + 15 + 15 = 45 makes the equation true. Once all x are turned to +, the equation reads correctly and the level solves.
+Fail Cases: If only one of the x’s is changed (leaving equation partially wrong) – not solved. Trying to alter the numbers or the 45 doesn’t help (the key is the operators). If the player does nothing, nothing changes (fail).
+Hint: “Perhaps those multiplication signs are the problem… try turning an ‘x’ into another symbol. Maybe an eraser or a tap could rotate it into a plus.”
+
+Levels 41–50 (Advanced Interactions and Timing)
+
+Level 41: Flying Frog
+Title: “Help this frog fly.”
+Layout: A cartoon frog is on the ground. The prompt suggests making it fly. The frog’s cheeks or nose may be interactable.
+Interaction: Press and hold your finger on the frog’s nose for a few seconds. The frog starts inflating like a balloon (its belly swells). Continue holding until the frog is overinflated – it then floats into the air, flying off. This solves the level.
+Fail Cases: Tapping quickly does nothing aside from a ribbit. Not holding long enough only partially inflates (the frog deflates if released too early, prompting a retry or simply not solving until fully done). If player doesn’t realize to hold, they might try other means (like attaching something to frog, which are not present).
+Hint: “Maybe the frog needs to fill with air… try holding your finger on it continuously and see what happens.”
+
+Level 42: Show Patience
+Layout: A blank or very simple screen with a message: “Show me your patience.” Perhaps a progress bar that fills extremely slowly or no interactive elements at all initially.
+Interaction: Do nothing for several seconds. After ~5 seconds of no input, the game recognizes the “patience” and completes the level. Any touch resets the timer. Essentially, the player must resist the urge to tap.
+Fail Cases: Tapping or swiping in frustration will reset any hidden timer, prolonging the puzzle. The player might fail if they keep interacting. A hint might appear if they tap too much, encouraging stillness.
+Hint: “Sometimes the solution is to wait... take no action for a little while.”
+
+Level 43: Shake the Tree
+Title: “Birdie overslept. Try shaking the tree.”
+Layout: A tree with a sleeping bird on a branch. The player is prompted to wake the bird by shaking the tree.
+Interaction: Tap and hold the tree trunk with one finger, then swipe left-right repeatedly (or simply perform a quick side-to-side swipe on the trunk) to simulate shaking. The bird wakes up and flies, solving the level. (Alternatively, multi-touch: hold trunk with one finger and shake the phone – but we simulate phone shake via swiping here).
+Fail Cases: Tapping the bird or yelling at it (nothing happens). Only lightly swiping once might not be enough – it needs a vigorous shake motion. Not interacting with the tree at all obviously won’t wake the bird.
+Hint: “You might need to simulate a real shake. Try dragging the tree quickly back and forth as if your finger is the wind.”
+
+Level 44: Find the Mistake
+Layout: A sentence “Find the mistake here” is written, but in that sentence itself one letter is wrong (for example, it’s written as “mlstake” with a missing dot on the “i”). Alternatively, numbers 1–10 are listed with one error (like a repeated 7).
+Interaction: Carefully look and Tap on the specific typo – e.g. tap the misspelled letter in “mlstake”. In another variant, if numbers are listed, tap the wrong number. The level resolves once the specific mistake is highlighted.
+Fail Cases: Tapping anywhere else or guessing incorrectly (each wrong tap may show “Nope, look again!”). If it’s text-based, players often overthink (like counting letters instead of noticing the obvious missing dot). Too many wrong taps may trigger a hint.
+Hint: “Read the sentence itself closely. Is every letter how it should be? There might be something off in the word mistake…”
+
+Level 45: Light All the Lamps
+Layout: A panel with three lightbulbs (lamps) and three switches beneath them. Two lamps can be turned on by their switches, but one lamp (rightmost) seems broken – its switch doesn’t work. The prompt: “Please turn on all the lights.”
+Interaction: Tap each switch to turn on lamp 1 and lamp 2. For lamp 3 (which is busted), the trick is to remove it: drag the faulty rightmost lamp off the screen. With the broken lamp gone, now “all remaining lamps” are lit, fulfilling the win condition. (Essentially you get rid of the requirement to light the broken lamp.)
+Fail Cases: Tapping the third switch repeatedly – nothing happens (the lamp stays off). Leaving any lamp off without removing it fails. Some might try to swap bulbs around (not implemented). The clever solution is to eliminate the problem lamp.
+Hint: “If one lamp refuses to turn on... perhaps you don’t actually need it. You could remove that lamp entirely so that all lamps that remain are on.”
+
+Level 46: Where Are My Socks?
+Layout: A close-up messy drawer is shown, or a zoomed-in scene where only a portion is visible. The player needs to find a pair of socks but only one sock is seen. The rest of the scene is off-screen beyond the boundaries.
+Interaction: Use two fingers to pinch-zoom out (zoom out) revealing more of the scene. By zooming out, the field of view expands and the missing socks become visible in the larger area. Once the socks are in view, the level is solved (or the player may then drag them together).
+Fail Cases: The player might search the visible area in vain (tapping/moving objects, only finding one sock). Without zooming out, the second sock isn’t on screen. If they only zoom slightly and still miss it, they might not solve it.
+Hint: “Try zooming out. Maybe the scene is bigger than you think – pinch with two fingers to see more.”
+
+Level 47: Cat on a Seesaw
+Title: “Tom the cat wants to fly.”
+Layout: A seesaw (teeter-totter) is set up with Tom (the cat) sitting on the right end. Above the left end, an anvil (heavy weight) hangs by a rope. The idea: drop something heavy on one side to launch Tom.
+Interaction: Drag and drop the anvil: pull it all the way up and then let go so it falls onto the left side of the seesaw. The impact launches Tom on the right side into the air (Tom “flies”). The level completes once Tom is airborne.
+Fail Cases: If the player just cuts a rope or unties the anvil without positioning it, maybe it misses – no launch (fail). Not interacting with the anvil at all leaves Tom grounded.
+Hint: “There’s a heavy anvil above... try dropping it onto the seesaw’s other end to catapult Tom into the air!”
+
+Level 48: Feed Them All
+Layout: A small food chain scenario: a leaf, a grasshopper, a mouse, and a cat are present. The cat is hungry but far removed. The hint in prompt: “Feed them all.”
+Interaction: Drag the leaf to the grasshopper (the grasshopper eats the leaf). Then drag the now fat grasshopper to the mouse (the mouse eats the grasshopper). Finally, drag the mouse to the cat (the cat eats the mouse). Now all have been fed in turn, solving the level.
+Fail Cases: Feeding in the wrong order: e.g. giving mouse to cat before mouse is full might not trigger completion or the mouse might run. Not everyone gets fed if done incorrectly. The puzzle requires the specific sequence. If the player just gives the leaf to the cat or other mismatches, nothing happens.
+Hint: “Consider the food chain: leaf → grasshopper → mouse → cat. Feed each creature to the next one in that order.”
+
+Level 49: Won’t Eat Soup
+Title: “He refuses to eat his mom’s delicious soup.”
+Layout: A child sits with a bowl of soup but his mouth is closed. Above him is a shelf with objects (one being a toy or perhaps a heavy book) held by a screw.
+Interaction: Drag the screwdriver (or use a finger) to remove the screw on the shelf. A object (like a toy or book) falls onto the boy’s foot. He yelps and opens his mouth in pain. Now drag the spoon/bowl to his open mouth, and he involuntarily eats the soup. Puzzle solved (in a slapstick manner).
+Fail Cases: Trying to force-feed (dragging spoon to closed mouth) doesn’t work – he keeps mouth shut. Not removing the screw yields no progress. If the wrong screw/object is removed (if multiple) – ensure there’s only one intended.
+Hint: “He won’t open his mouth... maybe create a surprise that makes him yell. I see a loose screw up there holding something – what if that fell?”
+
+Level 50: Catch the Mouse
+Title: “Eeek! Catch it before my mom has a heart attack!”
+Layout: A cartoon mouse is running around near three pipe openings or valves on the floor (left, center, right). The player needs to trap it. There are three valve wheel controls that can shut doors.
+Interaction: Tap the valve buttons in the correct timing order: close the left and right openings first (tap left valve, tap right valve), then when the mouse runs into the only open center path, tap the center valve quickly to shut it, trapping the mouse. Essentially, it’s a timing/reflex puzzle requiring quick successive taps.
+Fail Cases: If the player taps valves too slowly or in the wrong order, the mouse escapes out an open hole (fail). For example, if center is closed too early, the mouse might go left and escape because that wasn’t closed. If they hesitate, the mouse keeps switching exits.
+Hint: “Trap the mouse by closing paths. Block two exits first, then quickly seal the last once it runs there. Speed is key – be ready to hit the final valve when the mouse goes for it.”
+
+Levels 51–60 (Complex Logic and Novel Inputs)
+
+Level 51: Cut a Rectangle
+Title: “Teacher wants a rectangle.”
+Layout: On a table is a red piece of clay or paper in an odd shape, a scalpel/cutter tool, and the teacher’s speech bubble saying they need a rectangle shape.
+Interaction: Drag the red shape to the scalpel (or vice versa) and swipe the scalpel across it to cut it. Specifically, align part of the shape with the blade and perform a slicing gesture. This will slice off excess parts and result in a perfect rectangle piece. Once a rectangle is formed, the teacher is happy and level ends.
+Fail Cases: Simply dragging the shape around doesn’t change it. If the player just taps the scalpel or shape without the slicing motion, nothing happens. Cutting incorrectly (the wrong section) might produce a non-rectangle, which the teacher rejects (maybe the puzzle resets shape to try again).
+Hint: “Use the scalpel to trim the shape. You need straight edges – slice off the extra bits until a rectangle remains.”
+
+Level 52: Charge the Battery
+Layout: A phone with a low battery icon (or a battery object) is shown. A power outlet might be visible but no charger cord, or maybe the battery has “+” and “-” terminals accessible.
+Interaction: Press and hold your finger on the battery icon (for a few seconds). As you hold, the battery meter starts filling up (simulating wireless charging through your finger). After holding ~3 seconds, it reaches full and the level completes.
+Fail Cases: Tapping quickly does nothing. Plugging imaginary cords (none provided) isn’t possible – the trick is your touch “charges” it. If the player doesn’t hold long enough, it won’t fully charge (we could require full or partial fill).
+Hint: “Maybe you can lend some of your energy to it – try holding your finger on the battery and keep it there to charge.”
+
+Level 53: Stuck Ketchup
+Title: “I want some ketchup.”
+Layout: A ketchup bottle is upside down but nothing is coming out (the classic stuck ketchup scenario). Maybe a plate of fries awaits ketchup.
+Interaction: Rotate the bottle completely upright then upside-down (simulated by dragging the bottle to flip orientation 180°), and then tap/hit the bottom of the bottle repeatedly (simulate patting it). The sequence: drag with two fingers to rotate the bottle upside-down, then tap rapidly on the bottle’s bottom. After a few taps, ketchup flows out onto the plate. Level solved.
+Fail Cases: If the player only rotates but doesn’t tap, ketchup might not come out (we require the tapping as the trick). Only tapping without inverting doesn’t help (bottle oriented wrong way). Not interacting leaves ketchup stuck.
+Hint: “Turn the bottle upside down and tap the bottom, just like getting real ketchup out. A little thump should do it!”
+
+Level 54: Baby’s Pacifier
+Layout: A baby is crying in a crib. A pacifier is partly visible under the baby’s pillow or in a toy box. The prompt: “The baby is crying again.”
+Interaction: Drag the pillow or toy aside to reveal the hidden pacifier, then drag the pacifier into the baby’s mouth. The baby calms down immediately.
+Fail Cases: Tapping the baby does nothing except more crying. Not finding the pacifier means the baby won’t stop. Trying to drag other toys might distract but not solve (if not designed). Only the pacifier truly stops the crying.
+Hint: “Maybe the pacifier would help. Did it fall somewhere nearby? Have a look under things – and then give it to the baby.”
+
+Level 55: Both Buttons
+Title: “Open the gate (two buttons).”
+Layout: A gate or door that requires two pressure plates or buttons to be held simultaneously to open. The two buttons are far apart on the screen, labeled perhaps A and B.
+Interaction: Use two fingers at the same time to press both buttons (multi-touch). The gate opens once both are held down together. This tests multi-touch explicitly.
+Fail Cases: Pressing one button at a time – the gate stays closed (it might open halfway but then close when the button is released). Trying to drag an object onto one button while pressing the other could work if an object is available, but likely the intended solution is using two fingers. If the player doesn’t think of multi-touch, they’ll be stuck.
+Hint: “You may need a second hand (or finger). Press both buttons simultaneously – one finger on each – to trigger the mechanism.”
+
+Level 56: Purple Potion
+Layout: Two flasks of liquid, one red and one blue, and an empty beaker. Prompt: “I need you to mix these two liquids.”
+Interaction: Drag the red flask and pour it into the empty beaker, then drag the blue flask into the same beaker. The liquids mix and form a purple potion. (No shaking needed since we avoid device shake, we assume combining is enough). The mixture turning purple indicates success. Optionally, the player could swirl the beaker with a circular drag to mix, but color change likely instant on combining.
+Fail Cases: Pouring only one liquid – not complete (no purple). If they pour blue first or red first doesn’t matter as long as both end up mixed. Not combining them in the same container means the goal isn’t met.
+Hint: “Try pouring both the red and blue liquids into one container. Red + Blue = ... ?”
+
+Level 57: Don’t Press Red
+Title: “Do NOT press the red button!”
+Layout: A big red button is in the center, and maybe a small green button is hidden behind it (or off to the side). The instruction explicitly warns not to press red, implying something else should be pressed.
+Interaction: Drag the red button out of the way, revealing a green button underneath/behind it. Then tap the green button. The green button triggers success (perhaps it says “system override complete” or simply solves the level). The temptation puzzle is solved by literally avoiding the red button.
+Fail Cases: If the player taps the red button, perhaps an alarm sounds or a fail message “You pressed the red button!” appears (level resets). Ignoring everything (doing nothing) also does nothing obviously. Only by moving the red one and pressing green does it solve.
+Hint: “The instruction says DON’T press it… maybe heed that warning. Is there something underneath or around it you should press instead?”
+
+Level 58: Real Superhero
+Layout: Two individuals in superhero costumes claim to be heroes, and a civilian stands by a cliff. The task: find out which hero is real.
+Interaction: Drag the civilian and drop them off the cliff (or simply push them off by tapping a “push” button). This creates an emergency: the real superhero will swoop in to save the civilian mid-drop, exposing who is genuine. The level clears once the true hero acts (no one is harmed; the hero catches the civilian).
+Fail Cases: If the player hesitates to create danger (understandably), nothing happens. Choosing one hero by tapping them yields no result (both just pose). Only by forcing a rescue scenario does the real hero reveal himself.
+Hint: “You might need to create a situation only a true hero can handle. Perhaps put someone in danger (don’t worry, a real hero won’t let them get hurt).”
+
+Level 59: One Bear is Fake
+Layout: Three bears are sitting in a line. One is actually a person in costume. A honey jar is available.
+Interaction: Drag the honey jar in front of each bear’s nose. Two bears sniff happily, but one bear has no reaction – that’s the fake one (or perhaps the fake one reacts differently, like backing away). Then tap the unresponsive bear. The costume falls off, revealing the impostor. Level completes when the fake is identified.
+Fail Cases: If the player taps a real bear, it just growls (wrong). Not using the honey means there’s no obvious clue; guessing without evidence could lead to failure.
+Hint: “Bears love honey. Try offering honey to each bear – the one who isn’t interested is not a real bear.”
+
+Level 60: Stinky Monkey
+Title: “Eww! This monkey stinks.”
+Layout: A monkey in a cage with a low water tank. The water level is too low to reach the monkey or wash it. Nearby are several rocks on the ground.
+Interaction: Pick up the stones (by dragging them) one by one and drop them into the water tank. According to Archimedes’ principle, the water level rises with each stone. After enough stones, the water level rises high enough to wash the monkey (or the monkey jumps in). The stink lines disappear – monkey is clean and happy.
+Fail Cases: If the player drags the monkey into the low water, it doesn’t get clean (water too shallow). Dropping fewer than required stones only partially raises water (monkey still stinks). Ignoring rocks – nothing changes.
+Hint: “Maybe you can raise the water level. There are some stones lying around... try tossing them into the tank to make the water rise.”
+
+Levels 61–70 (Expert Puzzles and Wordplay)
+
+Level 61: Who is the Mother?
+Layout: Two women stand next to a crying baby. The prompt: “Find out which one is the mother.” Both women look calm. The baby holds a teddy bear.
+Interaction: Drag the teddy bear away from the baby. The baby starts crying louder. Watch the two women: the real mother will react (look distressed or move toward the baby) while the other stays relatively indifferent. Tap the woman who reacted emotionally (the right one in this scenario) – she’s the mother.
+Fail Cases: If the player chooses without evidence (50/50 guess), they might pick the wrong lady – fail. Not removing the toy might not show any difference. The puzzle relies on causing the baby to cry and observing reactions.
+Hint: “Mothers know their baby’s cry. Try making the baby cry louder (maybe take away her toy) and see who reacts most.”
+
+Level 62: Ghost Footprints
+Title: “There is a ghost here, help me find it!”
+Layout: An empty room scene. A bag of flour or powder is in one corner. Nothing visibly ghostly.
+Interaction: Drag the bag of flour and shake or pour it onto the floor. As the flour spreads, footprints appear in it – revealing the ghost’s path. The ghost’s outline might also show once footprints lead to it. The level completes when footprints are clearly seen (ghost found).
+Fail Cases: If the player just looks for an invisible ghost by tapping around, they won’t succeed. Not using the flour (or similar powder) means the ghost stays invisible.
+Hint: “An old trick: use powder or flour on the floor. Footprints will reveal an invisible ghost’s position.”
+
+Level 63: Which Exit?
+Title: “Which way leads to the exit?”
+Layout: Three cave tunnels or doors are shown. The area is dark. The character has a torch (flame). One of the exits is correct, the others dead ends.
+Interaction: Drag the lit torch near each exit doorway. When the torch gets close to one exit (the correct one), the flame flickers higher (indicating airflow or oxygen from outside). The wrong exits cause no change. Identify the exit with the torch’s flame reacting and then tap that exit. The character goes through it and escapes.
+Fail Cases: Choosing a door at random – if wrong, perhaps it loops back or a fail message “not this way!” appears. If the player doesn’t use the torch clue and guesses incorrectly, they fail. Trying to go without checking might result in fail.
+Hint: “Hold the flame near each tunnel. A real exit will have a slight breeze – your torch’s fire will react to moving air.”
+
+Level 64: Something’s Wrong
+Layout: A scene with three characters (e.g. an archer without a bow, a wizard without a wand, a miner without a pickaxe). The prompt: “Something is wrong here.” Possibly each character is holding the wrong item.
+Interaction: Drag and swap the items to the correct owners. For example, drag the bow to the archer, the wand to the wizard, the pickaxe to the miner. Once each person has their proper tool, they cheer and the level clears.
+Fail Cases: Placing even one item incorrectly means puzzle remains unsolved. If the player only fixes one or two characters but not all, it doesn’t complete. Tapping characters doesn’t help – must swap items by dragging.
+Hint: “Each person needs their proper tool. Who would use a pickaxe? Who needs a wand? Swap their equipment so everyone is matched correctly.”
+
+Level 65: Ice Cream Thief
+Title: “Which one of them ate my ice cream?!”
+Layout: Three children stand innocently. The mother asks who ate the ice cream. One girl on the right has her back slightly turned.
+Interaction: Tap and hold the suspicious girl and rotate her face towards you (or simply drag her to turn around). You reveal chocolate smudges around her mouth. Aha! She has evidence of ice cream. The level solves when the culprit is found (you might have to tap her again or the chocolate is enough proof).
+Fail Cases: Accusing the wrong kid (tapping one of the others) results in a fail (“No, he’s clean”). If the player doesn’t notice the rotatable girl, they might guess incorrectly. Only by turning her to see the stain do they get the answer.
+Hint: “Check their faces for evidence. One of them might literally have chocolate on her face... perhaps gently turn them to get a better look.”
+
+Level 66: Annoying Instrument
+Title: “I can’t bear this noise!”
+Layout: A person is badly playing a loud musical instrument (e.g. a novice violinist or trumpeter). The sound “♪???♪” is shown as a noise. The player wants the noise to stop.
+Interaction: Place your finger over the instrument’s output (e.g. cover the trumpet’s bell or the violin’s strings) on the screen and hold it. This mutes the sound – the instrument goes quiet. After a moment of silence, the level completes (the musician looks relieved or the instrument gives up).
+Fail Cases: Tapping the musician might just prompt a “I wish he’d stop” – not a solution. Covering for an instant might not register; it requires a continuous hold to simulate blocking the sound. If the player doesn’t think to literally cover it (mirroring how you’d cover your ears or the instrument), they may miss it.
+Hint: “Maybe you can physically block the sound. Try putting your finger on the instrument’s opening/strings and keep it there to silence it.”
+
+Level 67: Carsick Monkey
+Title: “Which monkey is carsick?”
+Layout: Three monkeys are sitting in a moving car (animation of bumps). One of them gets nauseous when motion is simulated. The car has no driver input, but you can simulate motion by shaking it.
+Interaction: Swipe the car left and right repeatedly (as if swerving or “shake” the device if it were allowed – here we use swipe) to simulate a bumpy ride. After a few swipes, one monkey turns green and looks queasy – that’s the carsick monkey. Tap that monkey. The level is solved when identified.
+Fail Cases: If the player picks without motion, all monkeys look fine – guessing yields likely fail unless by chance. If they only lightly swipe once, maybe no one reacts – need a few shakes. Choosing the wrong monkey (not the green-faced one) fails.
+Hint: “Cause a bit of motion. A carsick monkey will show it. Try shaking or swiping the car around to see who looks ill.”
+
+Level 68: Freeze the River
+Layout: A car is trying to cross a flowing river but there’s no bridge, only stepping stones and it's too deep. A bright sun is in the sky, two clouds are available.
+Interaction: Drag a cloud to cover the sun. Without sunlight, the temperature plummets – the river water freezes into a solid ice bridge. The car can now drive over the frozen river. (The puzzle twist: usually sun is good, here you hide it to freeze.)
+Fail Cases: If the player tries to build a bridge with stones or drive through water, it fails (car can’t cross). Dragging clouds away (like Level 2 logic) would be opposite and not help – must do inverse here. If they never obscure the sun, nothing changes.
+Hint: “Maybe cold would solidify the river. How to make it cold? Blocking the sun could help – try dragging a cloud over the sun to freeze the water.”
+
+Level 69: Smallest to Biggest
+Title: “Click the animals from smallest to biggest.”
+Layout: Several animals and perhaps one non-animal (a tree) are shown: for example, a mouse, a lion, an elephant, and a tree. The instruction is to tap in size order.
+Interaction: Tap the mouse first (smallest animal), then the lion (medium), then the elephant (largest). Ignore the tree, since it’s not an animal – that’s the trick. Only tap the animals in correct order. The tree is a decoy.
+Fail Cases: If the player includes the tree in the sequence or taps it at all, they fail (since tree isn’t an animal, that breaks the sequence). Tapping in wrong size order (mouse -> elephant -> lion, etc.) also fails. A common mistake is starting with tree thinking it’s smallest (but tree’s not an animal).
+Hint: “Pay attention: the task says animals. Don’t tap anything that isn’t an animal. Now, which animal is smallest, which is next, and which is biggest?”
+
+Level 70: Press 100 Times?
+Title: “Press the button 100 times.”
+Layout: A big button and a counter reading “100” in the instruction. It appears the game wants the player to tap the button 100 times.
+Interaction: Cheat the task: Drag the “100” from the text and drop the “00” off-screen (removing the two zeros), so the instruction effectively becomes “Press the button 1 time.” Now simply tap the button once. This completes the level. (We interpret this as literally altering the requirement.)
+Fail Cases: If the player actually tries to tap 100 times, it might work but we assume it’s tedious – possibly after a bunch of presses, the game could humorously fail them or simply not count beyond a point. The intended clever solution is removing the zeros. Not removing them = the level doesn’t end until 100 presses, which a user might not do fast enough or might overshoot.
+Hint: “You don’t really need to tap 100 times… maybe you can change that number. Try dragging the ‘00’ away so it only says 1.”
+
+Levels 71–80 (Advanced and Creative Challenges)
+
+Level 71: Ice Cream Maker
+Title: “She is so sad, she wants ice cream too.”
+Layout: A boy holds an ice cream cone, and a girl next to him is crying because she doesn’t have one. The boy wears a flat hat. The girl has long hair (which is pink or light-colored).
+Interaction: Drag the girl’s hair off her head – it’s actually cotton candy or a wig shaped like ice cream. Place that “scoop” of hair onto the boy’s hat (like a cone). It now looks like the boy is holding a second ice cream with her hair as the scoop! Give this “ice cream” to the girl (or just having formed it makes her happy). Essentially, you mixed the girl’s red hair with the boy’s blue hat to create a “purple ice cream” (visual pun).
+Fail Cases: If the player doesn’t think to remove her hair, they might try to get the boy to share (which doesn’t happen) or drag the hat alone (does nothing). Not realizing the creative mixing – which is admittedly bizarre – could cause a fail until hint.
+Hint: “Maybe you can improvise an ice cream. That hair… and that hat… put them together and see if it resembles a treat for her.”
+
+Level 72: Catch the Rabbit
+Layout: A rabbit is loose and there’s a box propped up by a stick (a trap), plus a box of carrots off to the side.
+Interaction: Drag the box of carrots under the propped trap box as bait, then tap the box of carrots (or open it). The rabbit hops over to eat the carrots and ends up under the trap. Tap the stick or rope to drop the box, capturing the rabbit. Level clears when the rabbit is caught.
+Fail Cases: If the player drops the trap too early (without the rabbit underneath), it misses. If they don’t use carrots, the rabbit won’t go under the trap. Trying to chase the rabbit by dragging it fails (it runs). Must use bait then trigger trap.
+Hint: “Set a classic trap: carrot bait and a box trap. Lure the rabbit with carrots, then let the box fall on it when it’s in position.”
+
+Level 73: Baby Gas Relief
+Layout: A baby is crying loudly, the text suggests she might be gassy (tummy ache).
+Interaction: Rub the baby’s belly in a circular motion (like giving a gentle tummy massage). After a few seconds of rubbing, the baby lets out a big comic fart (with a “Poot!” sound) and then smiles, no longer crying. The level completes amid presumably relieved faces.
+Fail Cases: Tapping the baby or picking it up doesn’t solve gas issues. Not rubbing long enough yields no result. Trying to feed or pacifier (if present from earlier puzzle) might not work this time. The solution specifically is the rub.
+Hint: “Maybe a tummy massage will help with gas. Try rubbing the baby’s belly gently for a bit.”
+
+Level 74: Turn Back Time
+Title: “She burned the dinner – cheer her up!”
+Layout: A sad woman with a pan of burnt food. A clock on the wall shows the current time (say 6 o’clock).
+Interaction: Rotate the clock’s hour hand backwards (counter-clockwise) to an earlier time, e.g. back to 2 o’clock. As you do, the burnt food in the pan un-burns (returning to raw ingredients, then perfect as time goes back). Essentially, you reverse time. Now the food is un-burnt and she is happy.
+Fail Cases: If the player just taps the woman or tries to remake the food with no ingredients, nothing changes. Rotating the clock forward might burn things more (not that we’d animate that, but it won’t solve it). Only reversing time via the clock solves.
+Hint: “If only you could go back in time before it burned… Perhaps you can – try moving the clock’s hand backwards and see what happens to the food.”
+
+Level 75: Fisherman’s Luck
+Title: “Help the fisherman catch a fish.”
+Layout: A fisherman is on a boat looking unhappy with an empty hook. Nearby is an apple tree hanging over the water with a few apples, and a worm in one apple.
+Interaction: Tap each apple on the tree to split it open. One apple reveals a worm. Drag that worm onto the fisherman’s hook as bait. A fish quickly bites now that bait is on the hook, and the fisherman catches it. Level clears with a happy fisherman.
+Fail Cases: If the player doesn’t find the worm (e.g. doesn’t tap apples), the hook remains baitless and no fish will bite. Using an apple as bait (dragging apple to hook) might not work (fish aren’t interested in apple). Only the worm triggers a catch.
+Hint: “He needs proper bait. Perhaps one of those apples has a worm inside – fish love worms. Try splitting the apples to find a worm, then put it on the hook.”
+
+Level 76: Hidden Rectangles
+Title: “How many rectangles are there?”
+Layout: Several overlapping rectangles drawn in a grid. Visually it might appear as one or two big rectangles, but actually comprised of smaller ones. (Classic counting puzzle.)
+Interaction: Drag the rectangles apart to separate them. Initially they overlap looking like one shape; moving them reveals there are, say, 4 rectangles in total. The answer is then obvious (4). The player might then input 4 or simply showing all of them triggers success.
+Fail Cases: If the player just guesses a number without rearranging, they often guess wrong (because overlapped shapes looked like fewer or more). Not moving them keeps the illusion.
+Hint: “You can move parts of the shape. Try dragging pieces aside – count each distinct rectangle once you separate them.”
+
+Level 77: Hidden Balls
+Title: “How many balls are there?”
+Layout: A basket is shown with a few balls visible (e.g. 3 balls) and possibly more hidden inside it. The real total is 10, but 7 are initially hidden.
+Interaction: Rotate the basket upside down by using a two-finger twist gesture or dragging it in a half-circle. Then shake it by quickly swiping up and down. This causes hidden balls to tumble out of the basket. After shaking, a total of 10 balls are now on the floor. The answer (10) can be input or automatically counted by the game to solve the level.
+Fail Cases: Counting only the visible balls (3) is wrong. If the player doesn’t get all hidden ones out (not rotating fully), they might only get some and miscount. They must fully invert the basket. Not interacting with the basket at all yields an incorrect count.
+Hint: “There might be more balls hidden inside the basket. Turn it upside down and give it a shake – see how many fall out.”
+
+Level 78: Cube Count
+Title: “How many cubes are there?”
+Layout: A 3D stack of cubes is shown (like a 3x3 cube stack missing some). This is a visual brain teaser – the answer might be not immediately obvious due to perspective. Possibly one cube is hidden behind.
+Interaction: Rotate the camera by swiping left/right to view the stack from different angles. This reveals any hidden cubes at the back. Count all cubes (e.g. 10 cubes). The player then enters that number. (Alternatively, tapping a “reveal” button after rotating could solve once the correct count is visible.)
+Fail Cases: If the player only counts from one angle, they might miss cubes occluded behind others (common mistake). Without rotating, they likely guess wrong.
+Hint: “You can view the stack from another angle. Try swiping to rotate the view – hidden cubes might appear. Count again from a different side.”
+
+Level 79: TV Not Working
+Title: “Turn on the TV, please.”
+Layout: A TV with a broken power cable (it’s snapped in two, with a gap). There are two broken ends of an electrical wire not touching.
+Interaction: Use two fingers, one on each broken wire end, and touch them simultaneously to complete the circuit. Essentially, your fingers act as a conductive link. Once both ends are touched at the same time, the TV powers on (screen lights up). Alternatively, pinch the two wire ends together to make them contact. Either approach closes the circuit.
+Fail Cases: Tapping one wire at a time doesn’t work – both must be held. Trying to drag the wire ends physically might not be allowed (if they’re too short). Not realizing multi-touch to bridge the gap means the TV stays off.
+Hint: “You need to connect the wires. Maybe use both hands – touch both broken ends with your fingers at once to conduct electricity and turn it on.”
+
+Level 80: Birthday Candles
+Title: “Today is Jim’s 2nd birthday. Light the candles for him.”
+Layout: A cake with 2 unlit candles. A matchstick or matchbox is available on screen. One candle might be longer than the other.
+Interaction: Strike a match: drag the matchstick against the matchbox (friction) to light it. Then use the lit match to touch the first candle’s wick – it lights up. Now use the flame of the first candle to light the second candle (simply drag the first candle’s flame over the second’s wick). Both candles are lit, completing the task.
+Fail Cases: If the player tries to light candles without lighting the match (like tapping candles – nothing happens), it fails. Lighting one candle but not the other is incomplete. Using the match on both is fine too, but the puzzle nudges using one candle to light the other to teach multi-step thought.
+Hint: “You have a match – strike it on the matchbox to ignite it. Then light each candle. The first candle is lit… you can use it to light the second one.”
+
+Levels 81–90 (Mastery and Meta Puzzles)
+
+Level 81: Boxing Trick
+Title: “The boxer on the left should win.”
+Layout: Two boxers (blue gloves on left, black gloves on right) are about to fight. The left one looks weaker. A pair of small dumbbells (or boxing gloves) lie near the ring.
+Interaction: Drag one of the heavy dumbbells into the left boxer’s glove (specifically, into his glove or hand), then pinch-out (zoom) that glove to enlarge it (making it a huge heavy glove). Now press the Fight button. With the weighted glove, the left boxer knocks out the right boxer easily.
+Fail Cases: If the player hits Fight without augmenting the left boxer, the right boxer wins (fail). Enlarging or weighting the wrong glove (right boxer’s) makes it worse. Not using the dumbbell or not enlarging means left boxer loses.
+Hint: “Give the left boxer an edge. Maybe slip something heavy into his glove (those dumbbells?) and even inflate his glove to pack a punch. Then start the fight.”
+
+Level 82: Curiosity Kills…
+Title: “They say curiosity kills the cat, but can you kill it as well?”
+Layout: A cat sits happily. The word “curiosity” is written in the prompt or on a sign. This morbid-sounding puzzle is solved figuratively.
+Interaction: Drag the word “curiosity” and drop it onto the cat. The phrase comes true – a cartoon “POOF!” happens and the cat pretends to be “knocked out” or disappears. (We will keep it cartoony and the cat reappears fine in later levels, it’s just a dark joke.) The level is marked solved once curiosity (the word) “kills” the cat character.
+Fail Cases: If the player hesitates due to the morbid instruction and does nothing, nothing happens. Tapping the cat alone doesn’t harm it (the cat meows). Dragging other objects does nothing. Only using the word on the cat triggers the event.
+Hint: “It’s a figurative saying… maybe take it literally. Use the word ‘curiosity’ itself on the cat – see if the idiom plays out.”
+
+Level 83: Break the Cookie
+Title: “Please stop this fight.” (Two kids are fighting over a cookie)
+Layout: Two boys are arguing over one large cookie – each pulling at it. The prompt implies to calm them down.
+Interaction: Use multi-touch: Place two fingers on the cookie, one on each end, and pull apart to split it in half. (Alternatively, pinch-out quickly on the cookie). The cookie breaks into two pieces. Give each boy one half (they automatically take them). They stop fighting and smile.
+Fail Cases: Trying to give the whole cookie to one boy makes the other cry (fail). If the player taps the kids or yells “stop” (no effect). Only by literally breaking the cookie can both be satisfied. If the user only has one finger on the cookie, it might just move it, not break.
+Hint: “How do you usually deal with one toy two kids want? Split it! Try pulling the cookie apart with two fingers so each gets a piece.”
+
+Level 84: Every Month Has 28 Days
+Title: “How many months have 28 days?”
+Layout: A calendar or a list of all months is shown (Jan, Feb, Mar, ... Dec). The question is a classic trick – the answer is all 12.
+Interaction: Tap every month on the list. Each tapped month highlights or checks off. The puzzle completes when all 12 are selected (since all months have at least 28 days).
+Fail Cases: If the player only taps “February” (common answer, thinking only Feb) – it’s wrong. Tapping any number other than all of them fails. If one month is missed, puzzle remains unsolved.
+Hint: “All months have at least 28 days. Don’t overthink – the answer is literally every month. Try tapping each month on the list.”
+
+Level 85: Racer Position
+Title: “I overtook the 2nd placed racer. What is my position?”
+Layout: A racing track illustration with cars labeled 1st, 2nd, 3rd maybe. The player’s car is shown just passing the car labeled 2nd.
+Interaction: The answer is 2nd place (if you overtake 2nd, you become 2nd). The player can respond by tapping the “#2” sign or choosing “2” from multiple-choice answers. The level auto-solves if the player indicates “2nd.”
+Fail Cases: Choosing “1st” (many think they become first) – wrong. Choosing any other position or not answering yields fail.
+Hint: “If you pass the second-placed racer, you take their spot. You were behind only one car now… so you are in what place?”
+
+Level 86: Matchstick TEN
+Title: “Remove 6 sticks to make it a 10.”
+Layout: A formation of matchsticks is arranged in a pattern (perhaps spelling out something like “+++” or a wrong number). The puzzle says remove 6 to form “TEN” (the word).
+Interaction: Tap or drag away six specific matchsticks from the formation. Once the correct six are removed, the remaining sticks spell the word “TEN”. This is a static puzzle. (This one heavily depends on the visual arrangement. We assume the dev notes specify which six to remove.)
+Fail Cases: Removing any other combination yields either nonsense or not exactly “TEN”. The puzzle likely won’t indicate partial progress until the correct removal is done. The player might guess, but hints likely detail which ones.
+Hint: “Think of the word T-E-N. Which sticks would form those letters? Try removing sticks that don’t contribute to spelling TEN.” (Perhaps an image hint in-game due to difficulty of describing.)
+
+Level 87: Closest “US”
+Title: “Which one is closest to us?”
+Layout: The words “Moon, Sun, Mars, and Month” are written. The question asks which is closest “to us.”
+Interaction: The trick is that the word “us” appears in the question itself. Tap the word “Month,” because in the phrase “closest to us,” the word “month” directly precedes “us” in the sentence. Alternatively, the logic is wordplay: “us” as letters appear in “sun” or such, but given the original solution: Month is closest to the word "us". So the player should tap “Month.”
+Fail Cases: Tapping “Mars” or “Moon” (thinking astronomy) is wrong. Tapping “Sun” (it’s physically closest star but not what they mean) is wrong. Only the word trick (month) is right.
+Hint: “Read the question literally. It asks which is closest to the word ‘us’ in the question itself. Look at the sentence: ‘Which one is closest to us?’ – the word ‘us’ is preceded by ‘...’.”
+
+Level 88: Star Rating
+Title: “Here’s a little tip: give us 5 stars!”
+Layout: A popup appears with 5 hollow star icons (like an app rating prompt). Perhaps a winking face from the game.
+Interaction: Tap all five stars (filling them in gold) to “rate” the game. When all 5 stars are lit, the level is considered passed. (It’s a meta-joke puzzle – the game cheekily asks for a 5-star rating).
+Fail Cases: Tapping fewer than 5 stars doesn’t complete it. If the player tries to close the prompt or taps outside, nothing happens (or maybe a “No, really, please rate 5★”). Only full five star selection solves.
+Hint: “Come on, we deserve it! Just tap all five stars – don’t worry, it’s just a puzzle, though we’d appreciate it in the app store too!”
+
+Level 89: Let the Cat In
+Layout: A shivering cat sits outside a closed door (door has a knob and maybe a welcome mat). The text: “Let the cat in, it’s freezing outside.”
+Interaction: Lift the welcome mat to find a key beneath it, then drag the key to the door lock to unlock it. Next, tap or swipe the door to open it. The cat walks in happily. (If no mat, maybe the key is on a ledge or under a flowerpot – same concept.)
+Fail Cases: Tapping the door without unlocking – it’s locked, nothing happens. Trying to break window – not implemented. Without the key, the door won’t open.
+Hint: “There might be a spare key hidden nearby (classic place is under the doormat). Once you find the key, use it on the door to open it.”
+
+Level 90: Minimum Chairs
+Title: “What is the minimum number of chairs we need for the dinner?”
+Layout: A family scenario: text describes e.g. “Each of these brothers has a sister. How many siblings are there?” or specifically it might list: Grandma (1), 5 brothers, 1 sister, etc. Actually, referencing original Brain Test: “Each of these brothers has a sister. How many siblings are there?” The answer was 6 (5 brothers + 1 sister). Or if it’s chairs: the note in snippet indicated some number like 11 (depending on family composition given). Possibly: Granny (1) + 3 children + 6 grandchildren + Aunt (1) = 11.
+Interaction: The player must do a bit of logical math in their head. Once they have the number, enter it (e.g. type 11 or choose from options). The puzzle is purely logical, no tricky interaction. The UI could present a number pad to input.
+Fail Cases: Any wrong count entered yields failure. If they misinterpret (like counting each relation incorrectly), they’ll get it wrong. Hints likely clarify family relations.
+Hint: “Count unique individuals. For example: The five brothers share one sister in common, so that’s 5+1=6 siblings total.” (Hint tailored to whichever exact riddle wording is used.)
+
+Levels 91–100 (Final Challenges & Meta)
+
+Level 91: Complete the “Level”
+Title: “Complete the leve_ please.” (The word “level” is missing an “L”).
+Layout: The text of the question itself says “Complete the leve please” – clearly missing an “L”. Possibly the level number “91” is displayed prominently with the word “LEVEL 91” on screen.
+Interaction: Drag the letter “L” from the UI (for example, from the word “LEVEL 91” at top, take the “L”) and drop it into the blank in “leve_”. This completes the word “level.” As soon as the word is fixed, the task is considered done (completing the word completes the level).
+Fail Cases: Not realizing the UI text is draggable – if the player tries typing or just scratching head, nothing happens. Placing a wrong letter (if any other letter is available) wouldn’t solve it.
+Hint: “Looks like the word ‘level’ is misspelled here. Maybe the missing letter is hiding in plain sight – perhaps up in the level banner. Try moving things around.”
+
+Level 92: Wake the Student
+Title: “Wake him up without making a sound.”
+Layout: A student is dozing at his desk in class. The teacher looks unhappy but doesn’t want noise. There’s a closed window with sunlight outside, and curtains.
+Interaction: Drag the curtains open to let bright sunlight flood in. The sudden light wakes the student (he squints and sits up). This doesn’t make noise, satisfying the condition.
+Fail Cases: Tapping the student or shaking him would be noisy (maybe teacher scolds = fail). Ringing a loud alarm obviously noise (fail). Only the light method works silently.
+Hint: “Shhh… a subtle approach is needed. Perhaps some bright light on his face will do it. Can you open the curtains or blinds quietly?”
+
+Level 93: Connect Wires
+Title: “Stop the robot invasion!” (for example, showing a robot that can be disabled by cutting power)
+Layout: A robot stands powered on. Two loose wires (one from robot, one from battery) need to be connected to overload it. Or maybe an EMP button but wires not connected.
+Interaction: Pick up one wire end and drag it to the other end to connect them (effectively completing a circuit). Alternatively, use two fingers to bring them together. When connected, a surge goes through and the robot fries out (smoke puffs) – puzzle solved.
+Fail Cases: Not connecting wires means robot continues. If only one wire is moved and not touching the other, no effect. Perhaps player might think to cut wires (the opposite) which would fail since we want overload.
+Hint: “Those cables look like they could short-circuit the robot if connected. Try joining the wires to send a power surge.”
+(Note: This puzzle is hypothetical since we needed something at 93; it reuses wire connection idea but in a different context from TV earlier.)
+
+Level 94: Siblings Riddle
+Title: “Each of these brothers has a sister. How many siblings are there in total?”
+Layout: A simple text riddle (maybe shows 5 boys and 1 girl visually). The classic solution: 6 siblings (5 brothers share the 1 sister).
+Interaction: The player inputs “6” as the answer (perhaps via a number pad or tapping the number 6). The level completes showing the family or a success note.
+Fail Cases: Answering 10 (thinking each brother has a different sister) – wrong. Answering 5 or 7 etc. – wrong. Only 6 is correct.
+Hint: “All the brothers share the same one sister. So total siblings = number of brothers + 1.”
+
+Level 95: Kitten or Cat?
+Title: “What is a cat’s child called?”
+Layout: The question text itself is the main clue. Many would say “kitten” by knowledge. But the trick: It’s literally asking what the phrase “cat’s child” is called grammatically. The word “cat’s” contains “cat”.
+Interaction: Tap the word “cat’s” in the question (because a cat’s child is a cat). Alternatively, if multiple choices given (Kitten, Cat, Puppy), choose “Cat”. It’s a trick that the possessive form might confuse – actually a kitten is a cat’s offspring, but the puzzle answer per Brain Test was to tap “cat’s” as in the word. (We follow the Brain Test solution: they expected “cat” because the phrase was tricky.)
+Fail Cases: Choosing “kitten” (the obvious real-world answer) – counted as wrong in the puzzle context. Any answer aside from the intended wordplay answer fails.
+Hint: “Look carefully at the wording. Cat’s child – the phrase itself might hide the answer. The word ‘cat’s’ literally has a cat in it… think literally.”
+
+Level 96: Four Wheels
+Title: “Stop all four wheels at once!”
+Layout: Four spinning wheels (like bicycle wheels or turntables) on screen, each rotating. The goal is to stop them simultaneously.
+Interaction: Use four fingers (or as many as available – might require two hands) to touch all four wheels at the same time, causing them to stop. The game likely detects multi-touch of 4 points. When all wheels are held, they stop spinning – level clears. If the device doesn’t support 4 distinct touches, two might suffice if scaled down puzzle, but design expects multi-finger proficiency.
+Fail Cases: Stopping one or two wheels at a time – the others still spin (when you go to the next, the previous resumes). Trying to use an object to jam them individually wastes time. Only simultaneous touch works.
+Hint: “You’ll need more than one finger – in fact, use both hands! Touch every wheel at the same time to halt them together.”
+
+Level 97: Kids and Cookie Jar
+Title: “Get the cookie jar down.”
+Layout: A cookie jar is on a high shelf. Two kids (one taller, one shorter) stand below reaching but can’t get it.
+Interaction: Drag the shorter kid on top of the taller kid (stack them)【analysis†】. The kids form a human tower. Now the top kid can reach the jar. He grabs it and they both get cookies. (Ensuring they don’t tumble – cartoon logic is fine.) Level solved when the jar is in hand.
+Fail Cases: Having one kid jump (tapping – fails). Moving a chair (if none present) not possible. Only stacking them works. If not perfectly stacked, maybe they wobble (small hint animation).
+Hint: “Maybe they can work together – one can lift the other. Try placing one kid onto the other’s shoulders to boost them up.”
+
+Level 98: Research Notes
+Title: “What occurs twice in a week, once in a year, and never in a month?”
+Layout: This is a classic riddle. Likely only text. The answer is the letter “E”.
+Interaction: Tap the letter “E” wherever it’s visible (perhaps in the riddle text itself, the letters WEEk, yEar, Month are on screen). The puzzle might highlight those occurrences. Or the player types “E” on a keyboard if provided. We prefer a touch solution: maybe the letters of the alphabet are shown, and they must tap E. Level completes with a correct ding.
+Fail Cases: Tapping any other letter or giving a wrong answer fails. (If they type an answer word, must exactly be “E”).
+Hint: “Think in terms of letters. Look at the words Week, Year, Month – which letter do you see twice in Week, once in Year, and not at all in Month?”
+
+Level 99: Spare Tire
+Title: “Change the car’s flat tire.”
+Layout: A car with a flat front tire sits. A jack and spare tire are present. Perhaps last challenge of mechanical nature.
+Interaction: Drag the jack under the car and crank it (by swiping up) to lift the car. Then drag the lug nuts off the flat tire (maybe tap each of 4 nuts to remove). Next, remove the flat tire (drag it off) and drag the spare tire on. Finally, tap the nuts to tighten them back on. The car comes off the jack and the level is complete. (This multi-step real-world procedure tests understanding without explicit guidance).
+Fail Cases: If they try to remove the tire without jacking up, nothing happens (maybe a narrator “the car’s weight is on it”). If they skip loosening nuts, tire won’t come off. Not completing all steps keeps puzzle unsolved.
+Hint: “Think like a mechanic: first lift the car with the jack, then remove the bolts and swap the tire. Don’t forget to tighten the bolts after putting the new tire on!”
+
+Level 100: The Final Cat
+Title: “Tap the cat’s child.” (A mischievous final twist referencing earlier puzzles)
+Layout: A mother cat and a kitten are on screen. The text intentionally echoes the tricky phrasing from before, but here it literally shows a kitten with its mother.
+Interaction: Tap the kitten (the cat’s child) – which is indeed a kitten. After all the trick puzzles, this final one is straightforward (perhaps to see if the player overthinks). Tapping the kitten triggers a happy meow and a “Congratulations – You completed all levels!” message.
+Fail Cases: If the player overthinks and taps the word “cat’s” as they did in Level 95, nothing happens (we purposely flip the script). Only the literal child (kitten) is correct.
+Hint: “This time it’s not a trick – just tap the actual kitten.” (Likely no hint needed as it’s supposed to be a moment of clarity/humor.)
+
+(The final level provides closure, possibly accompanied by a thank-you or invitation to rate the game, tying into the humor of Level 88.)
+
+Hint System
+
+The Hint System is designed to help players who are stuck, without directly giving away answers unless absolutely needed. Each level offers up to two hints: a first hint that nudges the player toward the solution’s logic, and a second, more explicit hint if they still can’t solve it. Players can access hints by tapping the lightbulb icon.
+
+Earning and Using Hints: Players start with a small number of free hints (e.g. 5). To get more, they have two options: watch a rewarded ad (to earn 1 hint) or spend in-game coins to buy hints. A single hint might cost, say, 10 coins. When a player taps the hint button, a menu pops up offering “Watch Ad for Hint” or “Use 10 coins for Hint.” This dual option ensures players can obtain hints even if they run out of coins by opting into ads.
+
+Hint Delivery: On tapping one of the options, the first hint appears overlayed on the level. If the player needs a second hint, they can tap the hint button again and spend again (or watch another ad) to get the more revealing hint. For example, on Level 23 (car and bridge), first hint might be “You may need to use two fingers at once,” and the second hint: “Hold the broken bridge and tap the car.” Hints are carefully worded to guide, not spoil outright (unless it’s the second hint which can be fairly direct).
+
+Ad Hints Cooldown: To avoid ad spam, there may be a short cooldown or limit like 1 ad-based hint per level (the rest must use coins or be earned via coin purchase). This ensures we don’t exhaust the player’s patience or inflate ad views unnaturally.
+
+UI Integration: The hint icon (lightbulb) is present in a corner of the gameplay UI. It shows the count of available hints. If hints are available, tapping it prompts the choice (ad or coins). If the player has 0 hints and is offline (no ad), the game will prompt “No hints available – you can get more by watching an ad or using coins” (and possibly encourage earning coins via other means).
+
+Monetization Balance: Watching an ad yields a free hint, encouraging engagement with rewarded videos. Alternatively, spending coins uses the currency the player earned (by completing levels or other means), creating a coin sink. This system caters to different player types – those willing to watch ads and those who prefer to use in-game earnings. According to mobile design best practices, offering such choice improves player satisfaction because players feel in control of how they pay for hints (time via ads or effort via coins).
+
+Hint Availability: Hints are available from the start of a level, but many players will try on their own first. If a player fails a level multiple times or spends a long time (e.g. over 2 minutes) without progress, a subtle animation on the hint button (glow or shake) can occur to draw attention to it. However, we do not force hints.
+
+Skip Level Option: In extreme cases, if a player is absolutely stuck even after hints, we can allow skipping the level by spending a larger amount of coins or a rewarded ad. This skip option will appear only after the second hint is viewed (or after X failed attempts), to prevent abuse. Skipping a level still grants completion coins (or possibly slightly reduced) but no extra reward.
+
+In summary, the hint system ensures players don’t churn out of frustration. It’s integrated with the ad and coin economy to be both a player aid and a monetization vector, following the logic that giving players a voluntary ad for a reward is a positive exchange. All hints are stored in a hints database for each level, and they are context-sensitive (ensuring they only reveal what’s needed for that specific puzzle).
+
+Currency System
+
+The game’s currency is gold coins, used primarily to buy hints or other assistive features. The design of the currency system encourages regular play and optional ad engagement, without being pay-to-win (since it’s a puzzle game, not competitive).
+
+Earning Coins:
+
+Level Completion: Each level awards a base amount of coins (e.g. 5 coins for easy levels, scaling up to 15 coins for later harder levels). This reward is given on first-time completion of a level. Replaying a solved level does not grant coins again (to prevent farming). However, we may give a small one-time bonus for completing an entire set of levels (e.g. +50 coins upon finishing all 100 levels, as an achievement reward).
+
+Level Performance Bonus: If a level is solved without using any hints, the player might get a small bonus (e.g. +2 coins) – this incentivizes trying without hints first. Also, completing a level under a certain time could grant a bonus coin or two, purely to reward quick thinking (optional design, not core).
+
+Rewarded Ads: The game offers optional ad opportunities to earn free coins. For example, a “Watch an ad for 20 coins” button might appear on the home screen or after every few levels. This follows common F2P practice: players can choose to watch a short ad to fill their coin bank instead of paying. There might be a limit like 5 ad watches per day to cap earnings.
+
+Daily Rewards: Implement a daily login coin reward to encourage regular play (e.g. Day 1: 10 coins, Day 2: 15 coins, … Day 7: 50 coins). Possibly allow doubling the daily reward via ad view (e.g. “Watch ad to double today’s coins”).
+
+Achievements: We can award coins for certain achievements (e.g. completing 10 levels gives 30 coins, finishing the first 50 levels gives 100 coins, etc.) These one-time bonuses motivate progression.
+
+Spending Coins:
+
+Hints: As discussed, hints cost coins (e.g. 10 coins for one hint). This is the primary coin sink. If a player has coins, they’ll likely spend them on hints when stuck, which is a non-paywalled gameplay aid.
+
+Skips: If we allow level skips, these could cost a significant number of coins (say 50 coins to skip a level). This hefty price ensures skip is used sparingly. Alternatively, one skip can be given as a rare reward (or purchased with real money, see monetization).
+
+Cosmetics (Optional): Though not requested, we could include some cosmetic unlocks for coins – e.g. alternate visual themes or avatars – for players who accumulate lots of coins. This gives another purpose to coins beyond hints. For now, hints and skips suffice as utility.
+
+Premium Purchases: While not explicitly asked, a currency system in a F2P often ties to real-money purchases. We can include a Coin Shop (accessible via the currency store UI) where players can buy coin packs with real money (for example, $0.99 for 100 coins, $4.99 for 600 coins, etc.). However, all content is accessible without purchase; this is just a convenience. We will not design puzzles that require purchase. The coin shop would be highlighted in the currency store screen. The hybrid monetization means players can get coins via play/ads or pay if they choose.
+
+Balance Considerations:
+
+The coin rewards are calibrated such that by playing normally, a user can afford hints occasionally. For example, by level 10 a player might have ~50 coins from completions. That could buy 5 hints – probably enough if they’re moderately stuck. The ad-for-coins option further supplements this for those who need more.
+
+We avoid giving too many free coins such that players never watch ads or consider IAP, but also ensure we’re not stingy such that they feel forced to pay.
+
+The choice to watch ads vs spend coins is key: if a user is hoarding coins, they might prefer to use them for hints; if they’re saving coins, they’ll watch an ad for hints. Both outcomes benefit us (ad view or using up coins which keeps them engaged to earn more).
+
+Reward Feedback: When coins are earned, a small coin animation and sound will play (e.g. coins jingling into a pouch icon). The coin HUD updates immediately. When spending coins, a coin deduction animation (coins flying to the item, or the coin icon decreasing) happens, so players clearly see the transaction. This feedback loop is important for satisfaction and clarity.
+
+Secondary Currency: We do not include a secondary “hard currency” like gems for now, to keep it simple. Coins serve all purposes (soft currency). If needed, one could consider a premium currency (purchased only) for special cheats, but it’s beyond scope and not requested.
+
+In summary, the currency system is free-player friendly (coins via play and ads) while still providing avenues for monetization through rewarded ads and optional IAP. It supports gameplay by tying into hint usage, aligning with a design where players either grind levels, watch ads, or pay a little if they want more hints, ensuring a broad appeal and fair balance.
+
+Login/Signup System
+
+To enhance player retention and enable cloud features, Brain Challenge provides a robust Login/Signup system. Players have three ways to play:
+
+As a Guest (no login)
+
+With Google (Google Account/Play Games login)
+
+With Email (our own account system)
+
+Guest Play: By default, new players can start as a Guest with no sign-up friction. Guest accounts allow immediate play but are stored only locally (data is saved on the device). A guest can later upgrade/link to a full account to enable cloud sync. We’ll periodically remind guests (non-intrusively) that they can sign up to save progress.
+
+Google Login: We integrate Google Sign-In for Android. On the main screen or first launch, we show a “Sign in with Google” option. If tapped, the game requests Google auth (using Play Games Services or Google Sign-In API). Upon success, the user’s profile (name/avatar) is pulled and their game progress will be associated with their Google Play Games ID. This option is quick (one-tap for those with Google accounts on device) and provides benefits like automatic cloud save and possibly achievements/leaderboards via Play Games. Many Android users prefer this for convenience.
+
+Email Login/Signup: For users who prefer not to use Google, we offer a traditional email signup. This is accessed via a “Sign up with Email” button on login screen. The user enters:
+
+Email address
+
+Password (with confirmation)
+We then create an account on our server (or using a service like Firebase Auth). If an account exists, they can choose “Log In” instead and input credentials to retrieve their cloud data. We’ll include typical features:
+
+Verification: (Possibly send a verification email, though for a game it could be optional initially.)
+
+Password reset: an option “Forgot Password” sends a reset link to their email.
+
+UI/Flow: On first launch, we present a Login Screen with options: “Continue as Guest”, “Google Sign-In”, “Sign up with Email”, and “Log in” (for returning users). This can be a full-screen modal. We allow skipping: if user continues as guest, they go to the main game. In Settings, there will be an option to sign in or link an account later.
+If a user is a guest and then chooses to sign up, their current progress (levels solved, coins, etc.) will be linked to that new account (uploaded to cloud). We ensure to merge local data with new account seamlessly to not lose progress.
+
+Account Sync: Logging in (with Google or email) enables Cloud Save (see next section) – progress auto-syncs to the cloud. If the user switches devices or reinstalls, logging in will retrieve their data. If a conflict arises (cloud vs local), we’ll prompt which one to keep (or default to the latest timestamp).
+
+Guest-to-Account Upgrade: We encourage login by highlighting benefits: “Save your progress and play on any device – log in!” in a tooltip or dialog after a few levels. However, it’s optional. Many players may remain guests if they don’t care about cross-device. We respect that by not forcing login, but we do provide easy one-tap Google login which typically has high conversion because of low friction.
+
+Security & Privacy: We’ll assure users that we only use their login for saving progress. Google login uses OAuth token, and email/password is stored securely (hashed on server). Minimal personal data is needed (maybe just a display name). We comply with privacy guidelines (not sharing their info).
+
+Multiple Device Sync: If a user logs in with the same account on multiple devices (say a phone and a tablet), progress will sync both ways. They can start on one and continue on another. Real-time sync isn’t required (not a multiplayer game), but on login or app launch it fetches the latest state. Cloud Save covers this more.
+
+Social/Sharing: If Google Play Games is used, we can use the user’s Google gamer name and avatar for a personal touch on the home screen. We might also integrate basic leaderboards (like fastest puzzle solve streak) through Google Play Games if we want an extra feature, but core design doesn’t require it. For now, login’s main purpose is persistence.
+
+Summary: The login/signup system provides flexibility:
+
+Guest: zero barriers to entry.
+
+Google: one-tap convenience, popular on Android.
+
+Email: fallback for those not using Google or who want a separate account (also usable on iOS if ported, but our focus is Android).
+
+It’s user-friendly – players can enjoy the game without sign up, but those who invest will likely log in to secure their progress. This system is standard in modern mobile games to improve user retention by safeguarding progress and enabling cloud features.
+
+Cloud Save System
+
+The Cloud Save system works hand-in-hand with the login system to ensure players’ progress is backed up and synced across devices. Here’s how it functions:
+
+Data Synced: The game will save key player data to the cloud:
+
+Level completion status (which levels are solved, and possibly the stars or coins earned on each).
+
+Coins balance.
+
+Hint inventory.
+
+Any settings or preferences toggled by the user (sound on/off, dark mode choice, etc.).
+
+Achievements or daily streaks, if applicable.
+This data is stored in a secure online database (for example, using Firebase Realtime Database or Cloud Firestore for ease of integration, or Google Play Games cloud if using that service).
+
+When Sync Occurs:
+
+Auto-save: After each level completion, the game will automatically upload the updated progress to the cloud (if logged in). It may queue the data and send immediately or soon after (to minimize frequent writes, we can batch small changes).
+
+Periodic Save: Additionally, while logged in, the game can periodically (e.g. every few minutes or on app close) ensure the cloud state is up to date.
+
+Manual Save Trigger: We can include a “Sync” button in Settings that the user can tap to force a cloud save or load, but generally we aim to do it seamlessly so manual action isn’t needed.
+
+Cross-device Retrieval: When a logged-in user installs the game on a new device or re-installs on the same device and logs in, the game will:
+
+Connect to cloud and download their last saved progress.
+
+If the local app already has some guest progress that’s different, it will prompt: “Cloud save found from [date]. Do you want to use Cloud Save (Level X completed) or local save (Level Y completed)?”
+
+Usually we’ll recommend the newer one (by timestamp) or merge if possible (though merging puzzle progress might be complex, we likely choose one data set).
+
+This ensures players don’t accidentally overwrite progress.
+
+Guest Conversion: When a guest user decides to log in or sign up, the system will treat the local data as the current state and upload it to the new cloud profile. So they won’t lose what they’ve done as guest – it migrates to their account once they log in. (We handle this by checking if the cloud has any data for that new account – if none, or if we explicitly mark new signups, we push local to cloud. If cloud did have data, we handle conflict as mentioned.)
+
+Cloud Service & Security: Using a cloud service (like Firebase) which is authenticated via the login (Google OAuth token or custom token for our email accounts) will secure each user’s data. Each account’s data is private – we don’t allow other users to query it (unless leaderboards, which is separate aggregated data).
+
+We will structure the database by userID, storing a JSON of their game state.
+
+Data usage is minimal (just a few numbers and booleans per level), so cost and speed is not an issue.
+
+Offline Mode: If a player is not connected to the internet, the game still functions (especially for guests). For logged-in users, we cache their progress locally and mark it unsynced. The next time they have connection, the game will attempt to upload any unsynced progress. If they play on two devices offline, this could cause a conflict once both go online – our rule will be last synced wins unless user chooses otherwise. However, such scenario is rare and we can mitigate by warning that cloud sync wasn’t updated (in settings we might show “Last sync: 2 days ago”).
+
+Testing: We’ll ensure through QA that a level completed on Device A appears as completed on Device B after syncing, that coin counts match, etc.
+
+Cloud Save for Hints/Coins Purchases: If a user buys coins (through IAP) or earns them on one device, that’s also saved to cloud, so their currency is consistent across devices. This avoids exploitation too (someone could otherwise try to cheat by duplicating offline progress – cloud ensures a single source of truth).
+
+Integration with Google Play (if chosen): If we use Google Play Games Services snapshots for cloud save, it offers an API to save game progress in the user’s Google Drive app folder automatically. This is an alternative to our own server. It provides conflict resolution UI from Google if needed. That approach could lighten our development. Otherwise, our custom cloud via Firebase gives us more control. Either works – we’ll likely use Firebase for ease given we already handle login, but using Google’s snapshot could also be straightforward due to built-in conflict handling.
+
+Data Privacy & Safety: We allow the user to wipe cloud data if they reset progress intentionally (maybe a “Reset Progress” button in settings, which clears local and cloud data – with double confirmation since it’s destructive). Cloud saves are mainly for user convenience and not shared publicly.
+
+Summary: The cloud save system ensures that players never lose their progress – a critical feature for modern mobile games to improve long-term retention. By logging in, a user gains peace of mind that if they switch phones or reinstall, they can pick up where they left off. It’s implemented to be invisible and automatic when connected, and robust against typical issues (with conflict resolution strategy in place). This is a strong incentive for players to sign up (in addition to leaderboards or achievements if any) because it protects their investment of time.
+
+Settings and Options
+
+The Settings screen provides players with control over various aspects of the game experience. It is accessible from the main menu (as a gear icon) or pause menu. The settings and options include:
+
+Sound Toggle: Two separate toggles:
+
+Music On/Off: Turns background music on or off.
+
+Sound Effects On/Off: Controls all SFX (button clicks, victory jingle, etc.).
+Many players appreciate being able to mute music or all sounds. The toggle states are saved (both locally and to cloud) so the game remembers preferences on next launch.
+
+Dark/Light Mode: A switch to enable Dark Mode for the interface. In dark mode, backgrounds become darker (charcoal/black) and text light, reducing eye strain in low light conditions. Light mode is the default (bright background). Toggling this applies a theme change across all UI screens. The puzzle art itself mostly remains the same (since they’re already minimalist with white backgrounds, etc.), but UI chrome (menus, dialogs) will adapt. This preference is instant (no restart needed) and saved. Dark mode is increasingly expected by users for comfort.
+
+Notifications Toggle: (If we plan to send notifications, e.g. daily puzzle reminder or coin bonus) we include a toggle “Notifications On/Off.” When off, we won’t send push notifications. This respects user choice and is good practice. If notifications are minimal, this could be omitted, but it’s polite to include.
+
+Login/Account Options:
+
+If the user is a guest, in Settings we show “Sign in or Create Account” button (to encourage them to secure progress).
+
+If the user is logged in, we display their account info (e.g. “Logged in as JohnDoe (Google)” or email, and an option “Log Out”).
+
+Possibly a “Link accounts” option if they want to connect Google after using email or vice versa (though generally one account is enough).
+
+Reset Progress: A dangerous but sometimes requested feature – a button “Reset All Progress.” If tapped, it will prompt “Are you sure? This will erase all level progress and start from level 1.” with a Yes/No. If confirmed, we wipe local progress and update cloud to blank state. This is for players who want to replay from scratch or share with family. We’ll double-confirm due to irreversibility. Also, if logged in, we might keep their coin purchases intact or also reset coins? Typically resetting progress could leave coins/hints intact or also reset – we should clarify perhaps resetting everything except purchased items.
+
+Credits: Possibly a sub-menu or button on settings that shows game credits (team, thanks, engine, etc.). Not explicitly asked, but often included. Could be under “About.”
+
+Support/Contact: We might include a “Contact Us” or “Support” entry that shows an email address or opens a small form if players have issues. Also, maybe a “Privacy Policy” link if required (especially if we integrate ads or external services, we should have a policy accessible).
+
+Language (if multi-lingual): Not requested, but if we plan to localize, a language selector could be in settings. For now, we assume one language (English) so we don’t include it.
+
+Settings UI Layout: Typically a scrollable list with toggles and buttons. For example:
+
+Music [On/Off toggle]
+
+Sound Effects [On/Off]
+
+Dark Mode [On/Off]
+
+Notifications [On/Off]
+
+Account: [Login/Logout button or info]
+
+Reset Progress [button]
+
+About/Privacy [buttons]
+
+We’ll group toggles at top, actions in middle, account at bottom maybe. The design will follow the minimalist style – clear text labels and a simple switch.
+
+Real-time effect: Toggling music/sfx should immediately reflect (e.g. turning off music silences it without needing to restart the track). Dark mode toggling should redraw UI instantly in dark theme.
+
+Saving settings: As soon as a toggle is changed, we save it to local storage (and cloud if logged in). This ensures the preference persists on next app launch and across devices.
+
+Testing and Fail-safes: We ensure that if a user accidentally hits reset, the double confirm prevents mistakes. If they log out, we warn that local data will remain but cloud sync stops until re-login (maybe we auto-save one more time on logout to be safe).
+
+In summary, the Settings screen is straightforward and user-centric, giving control over audio, visuals, and account management. It fits the minimalist ethos (only 3-5 main toggles) and improves user comfort and trust (with options like dark mode and reset). It also houses critical functionality like login state and progress reset while safeguarding against accidental misuse.
+
+Audio Design
+
+The Audio Design for Brain Challenge aims to create a pleasant, unobtrusive soundscape that complements the puzzle gameplay. It’s split into three categories: UI Sounds, Background Music, and Puzzle-specific Sounds (Fail/Success cues).
+
+Background Music: We will use a subtle, loopable background track during puzzles. Since constant music can be distracting in puzzle games, the music will be light, melodic, and ambient – likely a calm instrumental (e.g. a gentle piano or xylophone tune) that stays in the background. It will have an option to mute (in settings). The music’s volume is moderate by default so it doesn’t overpower thinking【analysis†】. We might choose 2-3 tracks that change every few levels for variety or one continuous low-key track. Additionally, for variety:
+
+Menu screens might have a slightly more upbeat but still soft track (to create a welcoming feel).
+
+During gameplay, the track is more looped and minimal.
+
+If the player sits on a puzzle a long time, the music can fade out after a while to give quiet (or we can allow it to loop indefinitely – user can toggle off if desired).
+
+UI Sound Effects: These short sounds give feedback for interactions:
+
+Button Clicks: Every tap on a button (menu selection, hint button, etc.) plays a soft “click” or “blip” sound. This is subtle, confirming the input.
+
+Toggle Switch: A gentle tick or pop when toggling a setting.
+
+Swipe actions (if any in UI) might have a slight whoosh, but we’ll likely keep it quiet unless it’s a significant action.
+
+Coin collection: When earning coins, a satisfying coin jingle or sparkle sound plays. For instance, finishing a level triggers a “coins added” sound as the coin animation plays.
+
+Error/Buzzer: If the user does an invalid action (like tries to tap something inactive or choose a wrong answer in a logic question that explicitly fails), a soft “buzz” or “boop” indicates it’s not correct. We ensure it’s not harsh or too loud, just enough to convey “nope.” (Puzzle “fail” states often will use these, see below).
+
+Puzzle Sounds (Fail/Success):
+
+Success Sound: Upon solving a level, we play a positive audio cue. This could be a short fanfare or a sparkling “success chime.” It should feel rewarding but not overly celebratory (keeping with minimalist tone). Perhaps a rising arpeggio or bell ringing. This sound pairs with the success animation (like “Level Clear” text or confetti on screen).
+
+Failure Sound: If a puzzle has a distinct fail condition (like the player does something clearly wrong, e.g. car falls in water, or chooses the wrong answer in a logic quiz), a gentle “uh-oh” sound plays. Possibly a “wah-wah” trombone or a short descending “dud” sound but kept light to not frustrate. It’s more of a playful feedback than scolding. If the fail triggers a reset, this sound plays at reset moment.
+
+Interactive feedback: Some puzzles might have objects with sound:
+
+Opening a fridge (Level 3) could have a fridge door creak/pop.
+
+Lighting a match (Level 79) might have a match-strike “fsssh” sound and a flame whoosh.
+
+The crying baby (levels 43, 73 etc.) might actually play a soft crying sound loop while unsolved (not too grating).
+
+Animal sounds: a meow when cat appears, a bark for dog level, etc., to add charm (ensuring they’re short and not repetitive).
+
+Mechanical puzzles (like rotating things, dragging something heavy) could have faint sounds (rope strain, etc.) though often optional.
+
+Multi-touch clues: We might not use sound specifically as clues, but if pressing two things at once triggers something, there might be a combined sound (like a “click” as a door unlocks when both buttons are held).
+
+Sound for Hints: When a hint is revealed, a light bulb “ding!” sound or a brief sparkle noise plays, reinforcing that a helpful idea appeared.
+
+Volume and Mix: All audio will be mixed such that:
+
+Background music is relatively low volume and low-frequency emphasis (so as not to clash with SFX frequencies).
+
+SFX are slightly louder relative to the music, to ensure feedback is heard.
+
+Success fanfare is noticeable but not blasting.
+
+We avoid any extremely high-pitched or low-pitched that could be unpleasant on phone speakers.
+
+Dynamic Music/Sound Consideration: Most puzzles will not have dynamic music changes, but one idea: maybe in particularly long puzzles, the music volume could decrease slightly (or a second ambient track with fewer instruments starts) to avoid fatigue. We’ll loop carefully so it’s not obvious or annoying.
+
+Mute Implementation: If music toggled off, we stop the music track immediately. If SFX toggled off, we ensure all sound effect triggers check the flag and skip playing if off. The toggles separate means players can keep sound effects and mute music if they prefer their own music or vice versa.
+
+No Voiceover: We are not planning voice narration or dialogues (keeping with minimalist). Animal or human vocal sounds (like baby cry or meow) are the only “voice” type sounds, used sparingly for effect.
+
+Platform notes: On Android, we’ll use an appropriate audio engine (Unity’s if using Unity, or Android SoundPool/MediaPlayer if native) that supports multiple concurrent sounds (e.g. background track + effect). We’ll preload short SFX for instantaneous play on button tap.
+
+Examples of Sound Mappings:
+
+Level 1: Tap lion – maybe a quick “ding” when correct or lion roars lightly when tapped right.
+
+Level 10: Apples tapping – each apple tapped can make a pop or crunch sound, and when all 5 caught, a success chime.
+
+Level 27: Rubbing glasses – a squeaky cleaning sound as you rub, success jingle when done.
+
+Funny ones: baby fart in 73 – a comedic pop sound.
+
+Easter eggs: If rating 5 stars on level 88, maybe a cheerful jingle unique to that as a thank you (players might find that amusing).
+
+The goal of the audio design is to make interactions feel responsive and rewarding (through sound cues) and to maintain a relaxing atmosphere with the music. The puzzle game should be enjoyable with sound on, but also perfectly playable muted (hence subtitles or visual cues accompany any sound-driven clue, and we have separate toggles).
+
+Overall, audio is supportive – it enhances feedback and immersion without stealing focus from the brain-teaser gameplay.
+
+User Interface Screens
+
+The game features multiple UI screens, each designed to be clear, minimalistic, and touch-friendly. Below is a description of each major screen, including layout and interactive elements:
+
+Splash Screen:
+
+Description: A quick introductory screen shown when the app launches. It likely displays the game logo “Brain Challenge” and possibly an eye-catching graphic (like a brain icon or puzzle piece) on a plain background. This screen is mostly for branding.
+
+Duration: It appears for a couple of seconds (during initial loading) and then transitions to the Home screen. If loading completes quickly, we fade to home early.
+
+Interaction: No user interaction here (except perhaps to tap to skip if loading is done). It’s mainly visual.
+
+Style: The logo is centered, with the background using the app’s primary color (light mode: white or pastel; dark mode: dark gray if user previously set dark mode). Perhaps a subtle animation (the logo might pop in or a small brain character blinks) to give polish.
+
+Home Screen (Main Menu):
+
+Layout: This is the central hub when the game is opened (after splash for returning users). It typically includes:
+
+Game Title or Logo at the top for branding.
+
+A prominent “Play” button (or “Start”) that takes the user to level selection or directly continues their progress.
+
+A Level Select button if not directly integrated into play (though we might integrate as a single “Play” goes to Level Select rather than immediate gameplay, since the user may want to choose levels).
+
+Currency Display: somewhere at top or corner, a coin icon with the number of coins. Tapping it might open the Currency Store.
+
+Hint icon might not be on home (only in-game UI).
+
+Buttons:
+
+“Level Select” (if separate from Play) or “Continue” if they have progress (it might say “Continue Level 37”).
+
+“Shop” or “Coins” if we have IAP/ads to get coins (the currency store).
+
+“Settings” (gear icon).
+
+“Login/Profile”: If user is logged in, maybe their avatar or name appears, tapping it opens account info. If not logged in, a “Login” button might appear on main menu as well (or just rely on settings screen).
+
+Possibly “Achievements” if integrated with Google Play achievements, and “Leaderboards” (these are optional fluff not required by prompt).
+
+“Remove Ads” if we monetize via an IAP to remove interstitials, could be a small button/icon (maybe in shop).
+
+We ensure large, easy-to-tap buttons (following mobile usability).
+
+Interaction: Player can tap Play to jump in. They can navigate to Settings via the gear. If they tap the coin display, it opens the Currency Store:
+
+Currency Store screen: Typically shows coin pack IAP options and maybe a “Watch Ad for coins” option, as well as info on current coins. It’s a pop-up or separate UI. The user can purchase or watch from there. This ties into monetization.
+
+Visual Style: Minimal, friendly. E.g., Play button is a bright color (calls to action). Possibly some puzzle characters or icons around (maybe a thinking brain mascot at bottom corner). But not cluttered. The background is mostly flat color or a subtle gradient.
+
+If Dark mode is on, the home screen adapts (dark background, light text/icons).
+
+The home screen might also scroll if needed (for many menu options), but ideally all primary ones fit without scroll on a typical phone.
+
+Level Select Screen:
+
+Description: This screen allows choosing a specific puzzle level. It’s usually arranged as a grid of level buttons (with level numbers). Since we have 100 levels, we can paginate or scroll.
+
+Layout:
+
+A scrollable grid of numbered level icons (e.g. 10 per page, 5x2 grid to be thumb-friendly). Completed levels have a mark (like a check or star), the current level is highlighted, locked future levels are greyed out or have a lock icon.
+
+Navigation for pages: maybe arrows or a scroll bar on the side, but simpler is vertical scroll through all 100 (with section headers for groups of 10 like “1–10, 11–20, ...” for ease).
+
+A back button or home icon to return to Home screen.
+
+Possibly a display of coins/hints at top as on home, although not needed here since not using currency on this screen directly.
+
+Each level button: shows level number. Might also show if hints were used (like an icon) or a star rating if we had that (we don’t currently incorporate star system explicitly, aside from maybe a “no hints used star”).
+
+Interaction:
+
+Tapping an unlocked level button starts that level (goes to Gameplay screen for that puzzle).
+
+Locked levels (those beyond the furthest solved +1) cannot be tapped – tapping them might produce a small shake or “locked” sound (and maybe a tooltip “Solve previous levels to unlock this”).
+
+The user can scroll to view all levels.
+
+The design ensures that if a user left off at level N, we might jump them to that position in the list (or have a “Play” on home jump directly to N). The Level Select is more for revisiting or jumping around among unlocked ones.
+
+Visual Style: Each level icon is maybe a circle or square with the number, using consistent color scheme (perhaps different color per 10-level group for visual variety). Completed ones could be colored, unlocked but not done ones white outline, locked ones grey.
+
+A small icon could show which levels you used hints on (for perfectionists) – e.g. a hint icon appears if you used a hint on that level, or a star for did it hint-free. This adds replay value if they want full stars (if we implement that).
+
+Gameplay Screen (Puzzle Screen):
+
+Description: This is where the player actually solves each level. It includes the puzzle display and minimal UI overlay for controls.
+
+Layout:
+
+Most of the screen is taken by the Puzzle Illustration/Interactive Area. This is the canvas where the objects, images, and text for the puzzle are shown. It’s essentially the level content.
+
+Top area might have a Level indicator (e.g. “Level 23” or a small label).
+
+Top corners:
+
+Left corner: a back/home button (usually an arrow or home icon) to return to level select or main menu.
+
+Right corner: the coins count (so player knows how many coins they have while in-game, useful if they consider using a hint which costs coins).
+
+Upper right (or somewhere accessible): the Hint button (lightbulb icon), with a small number showing how many hints available (though since hints can be purchased on demand, we might not need to show a count, but if we have a finite hint inventory we do).
+
+If tapped, as described, it brings up hint options (ad or coin) and then displays hint text in a pop-up or overlay text box.
+
+Possibly a pause/settings button either combined with back or separate (some games have one button for pause menu which includes quit, settings).
+
+The puzzle instruction text is often displayed at the top or bottom clearly. Many levels have a prompt like “Help the baby stop crying!” or “Which one is the biggest?” – we’ll show that as part of puzzle UI in a consistent style (maybe a speech bubble or a text banner across top).
+
+In interactive puzzles, objects can overlap with UI, so we keep UI minimal and edges mostly – leaving center for interactions.
+
+If time-based (few are) or certain count, we might show that relevant info (like Level 10 could have a counter of apples caught out of 5 if needed).
+
+Interaction:
+
+The player directly interacts with puzzle objects: tapping, dragging, etc., as per design. Our UI should not intercept those (so we have to ensure the interactive content area does not overlap essential UI buttons – e.g. if something is near screen edge, be careful near Back or Home icon to avoid accidental exit).
+
+The Back/home button confirms exit if they’ve made progress? Possibly not needed since progress is puzzle state, not like unsaved data – we can safely exit mid-level and come back (the level likely resets on re-entry though).
+
+Hint usage: When player triggers a hint, a semi-transparent overlay might show the hint text. The player taps anywhere to dismiss hint box and continue playing.
+
+Level completion: When solved, a Success overlay appears (perhaps center-screen): “Level Complete!” with maybe coins reward shown (“+10 coins”) and a “Next Level” button, along with an option to return to Level Select if they don’t want to auto-continue.
+
+This success screen is stylized, showing maybe an icon (trophy or checkmark) and then after a second it auto-continues or requires tap Next. We likely let the player decide (some like to pause after a solve).
+
+Fail state (if it exists such as a life lost or something): possibly a “Try Again” message if needed. But in our design, most fails just let you keep trying seamlessly except a few that reset scenario (like the boy with dog might auto reset the scene after fail).
+
+So we may not have a dedicated fail menu, maybe just a quick “Oops!” flash and the puzzle resets itself for try again. If a fail is end-of-level (like losing scenario), then a retry overlay with a “Retry” button might appear. But we generally avoid punitive fail screens to keep flow.
+
+Visual Style: The game canvas is largely white (light mode) with simple cartoon drawings. UI buttons are flat-design icons (no heavy styling, to match minimalist aesthetic). We ensure high contrast (back button dark icon on light background).
+
+Dark mode for gameplay: likely invert background to near-black and text to white; puzzle images might remain the same (some puzzle images might have white background baked in – we might put them on transparent or adapt them for dark mode).
+
+Responsiveness: On various screen sizes, the puzzle area might letterbox but UI anchors to corners. We'll use relative positioning (like 5% from edges).
+
+Success Screen (Level Clear Popup):
+
+Description: A transient screen or popup overlay when a level is solved.
+
+Layout: Usually a centered box or banner:
+
+It says something like “Level [X] Complete!” maybe using a fun font or stylized text.
+
+Shows reward coins earned: e.g. a coin icon with “+10”.
+
+Buttons: “Next Level” (or “Continue”) as the primary button. Possibly “Menu” or “Levels” as a secondary to exit to level select.
+
+If we track achievements like no hints or quickly solved, could show those (optional).
+
+Interaction:
+
+Player taps Next to proceed. If they tap outside maybe it also proceeds (or require explicit next tap).
+
+If they hit a Menu button, we confirm if they want to leave instead of going next (so they don't accidentally lose momentum).
+
+Visuals: Confetti or stars might animate in background to celebrate. The popup might be semi-transparent or distinct panel. We’ll use cheerful color (green or blue) to convey success.
+
+This screen only lasts until they choose next or after a short delay we might auto-advance to next level if the player doesn’t respond (some games auto jump after 3 seconds, but we might leave it until tap to allow break).
+
+Fail Screen (if needed):
+
+Description: Not all puzzles produce a fail overlay, but in cases with a definitive fail (like a quiz question answered wrong or a character “died”), we present a small notification.
+
+Layout: Possibly just a text in red “Try Again!” mid-screen or a cartoon fail icon (like a broken heart or a sad face).
+
+A “Retry” button if we paused action. Or we simply automatically reset and let them continue.
+
+Interaction: Usually not much; if a Retry button, tapping it resets level (or we could auto reset after 2 seconds).
+
+Visuals: Could dim screen for a moment and show fail text, then remove and reset puzzle items to start positions. Minimally intrusive, since puzzle games encourage immediate re-attempt.
+
+Hint Popup:
+
+Description: When a hint is invoked, we likely pause interactions and show the hint text.
+
+Layout: A text box or speech bubble near the top (to not occlude puzzle elements) with the hint message. If it’s multi-step, maybe allow scrolling inside if text is long (we aim hints to be one or two lines though).
+
+Possibly a small “Hint 1/2” label if two-tier hints and if the second is not yet unlocked.
+
+A close “X” button to dismiss the hint (or tapping outside the hint box also dismisses).
+
+Interaction:
+
+The game behind might be dimmed or still. We freeze puzzle timers while hint is up.
+
+Once closed, gameplay resumes.
+
+Visuals: Lightbulb icon next to the text to denote it’s a hint. Panel styled consistent with theme (light mode white panel with drop shadow, dark mode a dark panel with light text).
+
+Currency Store (Coins Store) Screen:
+
+Description: A marketplace for buying coins or getting them via ads/IAP.
+
+Layout:
+
+Show current coin balance top.
+
+List of coin pack options: e.g. “100 coins – $0.99”, “500 +50 bonus – $3.99”, etc., each with a buy button that triggers purchase flow.
+
+Option for rewarded ad: “Watch a video ad for +20 coins” with a play icon.
+
+Maybe a one-time “Free Starter Coins” if any promotions.
+
+If user can redeem promo codes or such, maybe a field (optional).
+
+A close/back button at top to exit back to previous (likely home or gameplay).
+
+Interaction: Tapping a purchase triggers IAP purchase confirmation. Watching ad triggers an ad and then on close adds coins (with a confirmation sound and animation).
+
+Visuals: Use coin icon imagery. Make it clear what costs real money vs free. Possibly highlight best value pack. Keep color scheme consistent (maybe gold accents for coin packs).
+
+Login/Signup Screens:
+
+Description: Interface for logging in or creating account.
+
+Layout for Google: If they tap Google login, likely uses Google’s UI (account picker) and we don’t design much beyond maybe an intermediate “Signing in…” overlay.
+
+Layout for Email:
+
+Fields: Email, Password, (Confirm Password for signup).
+
+Buttons: “Sign Up” or “Log In” switch. Possibly a toggle or two separate screens or a tab to switch between login vs signup.
+
+Maybe “Display Name” field if we want custom username visible (could use email local-part or just not needed).
+
+“Forgot Password” link on login form to handle via email.
+
+A cancel/back to game button if they want to skip.
+
+Interaction:
+
+Keyboard input for fields. The form will validate (e.g. proper email format, password length).
+
+If error (like email already in use, wrong password), show an error message in red below field.
+
+Upon successful signup/login, store credentials (token) and close the screen, returning to Home with their status updated.
+
+Possibly a loading spinner while contacting server.
+
+Visuals: Clean form on a panel, maybe the game logo at top to keep branding. Not too many decorations to distract from entering info. Use secure text entry for password.
+
+We might have nice icons for email & lock next to fields for clarity.
+
+Settings Screen: (As detailed in Settings section)
+
+Layout:
+
+Titled “Settings” at top.
+
+A list of toggles: Music, SFX, Dark Mode, Notifications (with text labels and on/off switches).
+
+Account section: either “Sign in to save progress” if guest (tapping opens login screen), or if logged in, show “Logged in as [name] (Google)” and a “Log Out” button.
+
+Reset Progress button (maybe at bottom, colored red to caution).
+
+Buttons or tiny text links for “Privacy Policy” and “Credits” if we include those, likely at the very bottom in small font.
+
+Back/close button top-left (could reuse the back arrow).
+
+Interaction:
+
+Toggles immediately effect (music stops/starts, etc. as described).
+
+Logging out pops a confirm “Are you sure? You will continue as Guest and lose cloud sync until re-login.” Accepting sets them to guest mode (we save locally).
+
+If signing in from settings, opens login UI.
+
+Reset progress double-confirm similar to log out.
+
+If in a level, opening settings should pause the puzzle (maybe grey out puzzle content behind the settings panel).
+
+We ensure any unsaved cloud actions (like sign out with unsynced changes) triggers a last sync or warning.
+
+Visuals: It’s a scrollable panel over a dim background if opened in-game. Each toggle row separated by divider line. Clear text labels. Possibly small icons for each (a musical note icon by Music, etc., for quick recognition).
+
+Misc UI Considerations:
+
+All screens will follow a consistent art style: flat icons, same font (likely a clear sans-serif for readability; maybe a playful one for headers).
+
+Touch targets will be at least ~48dp (on mdpi) to ensure easy tapping.
+
+Color scheme: a light theme might use white backgrounds, blue or green accent for buttons, black text; dark theme flips those.
+
+Transition animations: e.g. sliding between Home and Level Select, fade in/out for popups, small scale bounce on success messages – to make it feel smooth and polished.
+
+By designing each of these screens with intuitive layouts and minimal clutter, we ensure the UI is user-friendly and fits the mobile, touch-oriented nature of the game. Each screen’s description above guides implementation so that players can navigate, adjust settings, and enjoy the puzzles without confusion or delay.
+
+Visual Style Guide
+
+Our game’s visual style is minimalist, bright, and touch-friendly, ensuring the focus remains on puzzle interactions and not on overly complex artwork. Key style principles include:
+
+Clean and Simple Design: We use flat colors and basic shapes for most elements. Puzzle illustrations are drawn in a simple, cartoon-like manner – reminiscent of hand-drawn sketchy style but digitally neat. There are no highly detailed textures or shading; instead, solid fills or light gradients define areas. This not only looks modern but also avoids visual clutter that could mislead puzzle solving.
+
+Color Palette:
+
+The palette leans on soft, neutral backgrounds (white or light gray in Light Mode, dark gray/black in Dark Mode) to provide high contrast with interactive elements.
+
+Accent colors are used sparingly to highlight important items (e.g., a red button in a puzzle stands out, a blue sky background, green for correct indicators).
+
+We maintain consistent colors for UI elements: e.g., orange or blue for buttons (depending on brand choice), gold for coins, yellow for hint icon etc., as long as they are distinguishable.
+
+Puzzle objects generally use natural colors (a cat is gray, apple is red, etc.) but we might exaggerate color if it’s a clue (like the one fake bear might be a slightly off hue).
+
+Dark/Light modes primarily affect UI chrome – puzzle art remains mostly on white backgrounds (we might invert puzzle backgrounds in dark mode if needed, but puzzle content often expects white – we need to decide if dark mode in gameplay dims the puzzle area or not. Possibly, we keep puzzle background white even in dark mode for consistency with how puzzles were drawn, or we ensure puzzle assets have transparency and can be on any bg).
+
+Mobile Optimization & Touch Emphasis:
+
+All interactive elements are sized sufficiently for touch. For example, a small item like a key will still be drawn large enough (or have a larger touch area) so that a finger can drag it easily.
+
+We avoid extremely thin lines or tiny tap targets. If something is small (like a matchstick), the player can still tap it because we allow slight margin around it.
+
+Visual feedback: interactive objects might highlight or slightly enlarge when touched, giving a clear indication it’s being dragged or selected.
+
+Important elements are visually distinct – e.g., a red lever vs gray background, so players can identify what can be interacted with quickly. We also often annotate via puzzle text, but visuals should also cue the function.
+
+Consistency: UI components like buttons, toggles, icons follow a unified style set (all flat vector icons in the same stroke width and color). The use of one or two fonts across the game (one for headers/title, one for body text) ensures a cohesive look. For example, puzzle prompt text and menu text use the same font face (maybe a fun rounded sans-serif like Comic Neue or a clean one like Open Sans). We ensure font legibility at small sizes on phone screens.
+
+Animation & Effects:
+
+We use simple animations to bring the minimalist art to life: e.g., the cloud in a puzzle might slowly drift until interacted with, a character might blink or bounce slightly when idle. These subtle motions add charm but not distraction.
+
+Success confetti or coin animations are lively but brief, aligning with our minimalist approach (not too overdone).
+
+Transitions between screens (fade, slide) are smooth but quick, to keep game pace.
+
+Particle effects or glows are used sparingly (e.g., hint button might glow subtly when available or if trying to draw attention after a long stall).
+
+Feedback through Visuals:
+
+When a puzzle piece is in the correct place (like when assembling letters in “VIC-TO-RY”), it could snap in with a slight pop animation and perhaps a subtle highlight flash. This visual confirmation helps players know they did right.
+
+Wrong attempts (like tapping a wrong answer) might yield a slight shake of that element or a brief red flash on it.
+
+The interface uses color cues: Green often indicates correct/progress, Red indicates error/fail, Yellow for hints/warning, Blue for neutral interactive elements. We stick to those associations consistently.
+
+Character and Object Design:
+
+Characters (the boy, Tom the cat, etc.) are drawn in a cute, simplistic style – maybe outline drawings with block colors, reminiscent of popular brain puzzle games (like Brain Test style). They have just enough detail to be expressive (two-dot eyes, simple mouth for expression) but not so much that it distracts.
+
+Objects are easily recognizable: e.g., a fridge looks like a fridge icon, a flower is clearly a flower. We often label things in puzzle text if needed so no ambiguous visuals frustrate players.
+
+Use of outline: we might use a consistent outline thickness for all drawn objects to unify style.
+
+Screen Adaptivity:
+
+We ensure the design works across various phone aspect ratios (16:9, 18:9, etc.). The minimalist design actually helps – not many textures that could be cut off. We anchor UI elements relative to safe areas. Puzzle art may be centered and can have a margin so no edge gets too close to screen edges where notches might cover them.
+
+On tablets (if supported), the UI might just scale up or show more empty space (which is okay). We’ll keep the layout centered and not stretch art unnaturally.
+
+Branding & Personality: The overall vibe is friendly, bright, and modern. The minimalism also lends a somewhat brainy aesthetic – akin to a clean puzzle book or a slick mobile app look, which aligns with the user expectations for a brain puzzle game (similar to visual style in games like Brain Out or Tricky Test where white backgrounds and simple drawings prevail).
+
+In summary, the visual style guide ensures the game is:
+
+Minimalist: not overloaded, focusing on key elements.
+
+Consistent: unified colors, fonts, iconography.
+
+Touch-friendly: large, clear visuals that invite interaction.
+
+Mobile-optimized: easy to read and play on small screens.
+
+Aesthetically pleasing: with a lighthearted, cartoon charm that appeals to a broad audience (kids and adults alike).
+
+By adhering to this style across all assets and UI, Brain Challenge will have a professional yet fun look and feel that complements its gameplay and makes it memorable.
