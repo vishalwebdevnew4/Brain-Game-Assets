@@ -1,0 +1,347 @@
+GAME UI & UX DESIGN DOCUMENT
+
+Game Type: Interactive Brain Puzzle
+Working Name: TOUCH / THINK
+Orientation: Portrait
+Style: Minimal, deceptive, calm
+Font: Sans-serif (bold for instructions)
+
+📱 SCREEN 1: SPLASH SCREEN
+Purpose
+
+Branding + mood setting
+
+UI Elements
+
+Center logo text:
+“TOUCH / THINK”
+
+Subtitle (small):
+Nothing works the way it should
+
+Behavior
+
+Fade in (0.5s)
+
+Hold (1.5s)
+
+Tap anywhere → go to Home
+
+No buttons
+No sound by default
+📱 SCREEN 2: HOME SCREEN
+UI Layout
+
+Center large button (looks like a button)
+
+Text: PLAY
+
+Bottom left: Sound icon 🔊
+
+Bottom right: Settings ⚙️
+
+Hidden Behavior (Trick)
+
+PLAY button moves slightly away when first tapped
+
+Second tap works
+
+👉 Teaches player: UI can lie
+
+📱 SCREEN 3: LEVEL SELECT
+UI Layout
+
+Title: LEVELS
+
+Grid: 5 × 6 numbers (1–30)
+
+Locked levels:
+
+Greyed
+
+Still tappable
+
+Special Behavior
+
+Tapping a locked level:
+
+Shows message:
+
+“Curiosity is not punished.”
+
+(No action, just flavor)
+
+📱 SCREEN 4: GAMEPLAY SCREEN (CORE)
+
+This screen changes per level, but follows rules.
+
+Common UI
+
+Top center: Level number
+
+Center area: puzzle elements
+
+Top right: ❌ Reset icon (tiny)
+
+Rules
+
+NO visible “Submit” button
+
+NO “Tap here” hints
+
+Everything is interactive OR fake
+
+🧩 LEVEL DESIGN SYSTEM (VERY IMPORTANT)
+
+Every level contains:
+
+Goal text (short)
+
+2–4 elements
+
+1 correct interaction
+
+1–2 fake interactions
+
+🧩 LEVEL 1 – “OPEN”
+UI
+
+Text (center top):
+OPEN THE DOOR
+
+Big rectangle (door)
+
+Text label: OPEN
+
+Correct Action
+
+Drag “OPEN” text onto door
+
+Fail Cases
+
+Tapping door → nothing
+
+Tapping text → nothing
+
+Success
+
+Door fades
+
+Level complete popup
+
+🧩 LEVEL 2 – “DON’T”
+UI
+
+Button: DO NOT TOUCH
+
+No other elements
+
+Correct Action
+
+Long-press button (3s)
+
+Fail Cases
+
+Single tap → shake animation
+
+Clue (after 2 fails)
+
+“Time matters.”
+
+🧩 LEVEL 3 – “EMPTY”
+UI
+
+Text: Tap the circle
+
+(No circle on screen)
+
+Correct Action
+
+Tap empty screen
+
+Fail
+
+Tapping text → screen flashes
+
+🧩 LEVEL 4 – “DIRECTION”
+UI
+
+Arrow pointing UP
+
+Text: Swipe UP
+
+Correct Action
+
+Swipe DOWN
+
+Fail
+
+Swipe up → arrow breaks
+
+🧩 LEVEL 5 – “WAIT”
+UI
+
+Timer counting from 5 → 0
+
+Text: HURRY UP
+
+Correct Action
+
+Do nothing until timer ends
+
+Fail
+
+Any interaction → reset
+
+🧩 LEVEL 6 – “NUMBER”
+UI
+
+Lock icon
+
+Number text: 3
+
+Correct Action
+
+Drag number into lock
+
+🧩 LEVEL 7 – “TWO”
+UI
+
+Text: Use two fingers
+
+Circle
+
+Correct Action
+
+Pinch circle
+
+🧩 LEVEL 8 – “TEXT”
+UI
+
+Button: BUTTON
+
+Text below: Tap the button
+
+Correct Action
+
+Tap the word “button” in the sentence
+
+🧩 LEVEL 9 – “RELEASE”
+UI
+
+Bar filling while holding
+
+Text: Hold
+
+Correct Action
+
+Hold → release at exact moment
+
+🧩 LEVEL 10 – “MEMORY”
+UI
+
+No text
+
+Same layout as Level 3
+
+Correct Action
+
+Player remembers: tap empty screen
+
+❌ FAIL SCREEN (SOFT FAILURE)
+UI
+
+Message (randomized):
+
+“That made sense…”
+
+“Try another way.”
+
+“Almost.”
+
+Buttons
+
+RETRY (auto-retry after 1s)
+
+HINT (optional)
+
+💡 HINT SYSTEM
+Rules
+
+No direct answers
+
+Max 2 hints per level
+
+Example Hints
+
+“What else reacts?”
+
+“Try less.”
+
+“Try longer.”
+
+“Ignore the obvious.”
+
+✅ SUCCESS POPUP
+UI
+
+Text: LEVEL COMPLETE
+
+Small glow animation
+
+Behavior
+
+Auto-advance after 1.5s
+
+Manual NEXT button (optional)
+
+📱 SETTINGS SCREEN
+UI
+
+Sound toggle
+
+Dark mode toggle
+
+Reset progress
+
+Hidden Behavior
+
+Long-press Reset → confirmation
+
+🎨 COLORS & STYLE
+
+Background: #FAFAFA or #121212
+
+Accent: soft yellow / cyan
+
+Fail: subtle red flash
+
+Success: soft green glow
+
+🔊 SOUND DESIGN
+
+Tap: soft click
+
+Fail: low “thud”
+
+Success: soft chime
+
+NO loud sounds.
+
+✅ SUMMARY: WHAT YOU NOW HAVE
+
+You now have:
+
+Full screen list
+
+Exact buttons & texts
+
+Level designs (1–10)
+
+Fail cases
+
+Hint logic
+
+UI behavior rules
+
+This is enough to build the full game.
